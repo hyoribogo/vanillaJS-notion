@@ -37,7 +37,7 @@ export default function NotionPage({ $target, initialState }) {
       const newDocument = await createDocument(data)
 
       fetchDocumentsData()
-      fetchDocumentsData(newDocument.id)
+      fetchContentData(newDocument.id)
     },
   })
 

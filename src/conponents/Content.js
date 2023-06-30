@@ -18,7 +18,7 @@ export default function Content({ $target, initialState, onDelete }) {
     const { id, title, content, documents } = this.state
 
     $content.innerHTML = `
-      <h1>${title}</h1>
+      <h1>[${id}] ${title}</h1>
       <button>X</button>
       <textarea>${content ? content : ''}</textarea>
 
