@@ -11,7 +11,7 @@ export default function DocumentsList({ $target, initialState, onAdd, onClick })
 
   const renderDocumentsTree = ({ documents, title, id }) => {
     // 일단 id도 뜨게 구현
-    let html = `<li data-id="${id}">[${id}] ${title}</li>`
+    let html = `<li data-id="${id}"><span>[${id}] ${title}</span></li>`
 
     if (documents.length) {
       html += "<ul>"
@@ -34,8 +34,8 @@ export default function DocumentsList({ $target, initialState, onAdd, onClick })
 
     $documentsList.forEach(($document) => {
       $document.addEventListener('click', ({ target }) => {
-        if (target.closest('li')) {
-          const { id } = target.dataset
+        if (target.closest('span')) {
+          const { id } = $document.dataset
           onClick(id)
         }
       })
