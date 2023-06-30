@@ -10,11 +10,20 @@ export default function Content({ $target, initialState }) {
   }
 
   this.render = () => {
-    const { title, content } = this.state
+    const { title, content, documents } = this.state
 
     $content.innerHTML = `
       <h1>${title}</h1>
       <textarea>${content}</textarea>
+
+      ${documents.length ? `
+          <ul>
+            ${documents.map((subdocument) => 
+              `<li><span>${subdocument.title}</span></li>`
+            ).join('')}
+          </ul>
+        ` : ''
+      }
     `
   }
 }
