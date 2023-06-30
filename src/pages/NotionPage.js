@@ -1,4 +1,5 @@
-import { getRootDocument } from '../api/api'
+import { getRootDocument, getSpecificDocument } from '../api/api'
+import Content from '../conponents/Content'
 import DocumentsList from '../conponents/DocumentsList'
 
 export default function NotionPage({ $target, initialState }) {
@@ -10,7 +11,7 @@ export default function NotionPage({ $target, initialState }) {
 
   this.setDocuments = (nextDocuments) => {
     this.documents = nextDocuments
-    documentList.setState(nextDocuments)
+    documentsList.setState(nextDocuments)
   }
 
   // 편집기 state
@@ -18,14 +19,23 @@ export default function NotionPage({ $target, initialState }) {
 
   this.setEditorContent = (nextContent) => {
     this.editorContent = nextContent
+    content.setState(nextContent)
   }
 
-  const documentList = new DocumentsList({ 
+  const documentsList = new DocumentsList({ 
     $target: $notionPage, 
     initialState: this.documents,
-    onAdd: () => {
+    onAdd: (id) => {
       alert("추가 버튼 누름")
+    },
+    onClick: (id) => {
+      fetchContentData(id)
     }
+  })
+
+  const content = new Content({
+    $target: $notionPage,
+    initialState: this.editorContent,
   })
 
   // 함수 파일 작성하기
@@ -33,6 +43,13 @@ export default function NotionPage({ $target, initialState }) {
     return getRootDocument()
       .then((documents) => {
         this.setDocuments(documents)
+      })
+  }
+
+  const fetchContentData = (id) => {
+    return getSpecificDocument(id)
+      .then((content) => {
+        this.setEditorContent(content)
       })
   }
 

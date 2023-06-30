@@ -17,7 +17,7 @@ const request = async (url = "", options = {}) => {
 }
 
 const fetchData = async (url, method = "GET", data = null) => {
-  if (typeof url !== 'string') url = url.toString()
+  if (url.length && url !== null) url = `/${url}`
 
   const options = {
     method,
@@ -45,8 +45,8 @@ const getSpecificDocument = async (id) => {
 }
 
 // Document 생성하기 POST
-const createDocument = async (data) => {
-  const res = await fetchData("", "POST", data)
+const createDocument = async (id) => {
+  const res = await fetchData(id, "POST")
   return res
 }
 

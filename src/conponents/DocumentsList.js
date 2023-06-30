@@ -1,4 +1,4 @@
-export default function DocumentsList({ $target, initialState, onAdd }) {
+export default function DocumentsList({ $target, initialState, onAdd, onClick }) {
   const $documents = document.createElement('div')
   $target.appendChild($documents)
 
@@ -9,14 +9,14 @@ export default function DocumentsList({ $target, initialState, onAdd }) {
     this.render()
   }
 
-  const renderDocument = ({ documents, title, id }) => {
+  const renderDocumentsTree = ({ documents, title, id }) => {
     // 일단 id도 뜨게 구현
-    let html = `<li>[${id}] ${title}</li>`
+    let html = `<li data-id="${id}">[${id}] ${title}</li>`
 
     if (documents.length) {
       html += "<ul>"
       documents.forEach((subdocument) => {
-        html += `${renderDocument(subdocument)}`
+        html += `${renderDocumentsTree(subdocument)}`
       })
       html += "</ul>"
     }
@@ -26,8 +26,19 @@ export default function DocumentsList({ $target, initialState, onAdd }) {
 
   this.render = () => {
     this.state.forEach((document) => {
-      const documentHtml = renderDocument(document)
+      const documentHtml = renderDocumentsTree(document)
       $documents.innerHTML += `<ul>${documentHtml}</ul>`
+    })
+
+    const $documentsList = $documents.querySelectorAll('li')
+
+    $documentsList.forEach(($document) => {
+      $document.addEventListener('click', ({ target }) => {
+        if (target.closest('li')) {
+          const { id } = target.dataset
+          onClick(id)
+        }
+      })
     })
   }
 
