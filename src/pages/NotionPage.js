@@ -1,4 +1,4 @@
-import { getRootDocument, getSpecificDocument } from '../api/api'
+import { createDocument, getRootDocument, getSpecificDocument } from '../api/api'
 import Content from '../conponents/Content'
 import DocumentsList from '../conponents/DocumentsList'
 
@@ -25,12 +25,20 @@ export default function NotionPage({ $target, initialState }) {
   const documentsList = new DocumentsList({ 
     $target: $notionPage, 
     initialState: this.documents,
-    onAdd: (id) => {
-      alert("추가 버튼 누름")
-    },
     onClick: (id) => {
       fetchContentData(id)
-    }
+    },
+    onAdd: async (id) => {
+      const data = {
+        title: "제목 없음",
+        parent: id ? id : null
+      }
+
+      const newDocument = await createDocument(data)
+
+      fetchDocumentsData()
+      fetchContentData(newDocument.id)
+    },
   })
 
   const content = new Content({
@@ -39,18 +47,16 @@ export default function NotionPage({ $target, initialState }) {
   })
 
   // 함수 파일 작성하기
-  const fetchDocumentsData = () => {
-    return getRootDocument()
-      .then((documents) => {
-        this.setDocuments(documents)
-      })
+  // 전체 documentsList 불러오기
+  const fetchDocumentsData = async () => {
+    const documents = await getRootDocument()
+    this.setDocuments(documents)
   }
 
-  const fetchContentData = (id) => {
-    return getSpecificDocument(id)
-      .then((content) => {
-        this.setEditorContent(content)
-      })
+  // 특정 document의 content 불러오기
+  const fetchContentData = async (id) => {
+    const content = await getSpecificDocument(id)
+    this.setEditorContent(content)
   }
 
   fetchDocumentsData()
