@@ -1,6 +1,6 @@
 import { createDocument, deleteSpecificDocument, getRootDocument, getSpecificDocument } from '../api/api'
-import Content from '../conponents/Content'
-import DocumentsList from '../conponents/DocumentsList'
+import Content from '../components/Content'
+import DocumentsList from '../components/DocumentsList'
 
 export default function NotionPage({ $target, initialState }) {
   const $notionPage = document.createElement('div')
