@@ -15,11 +15,11 @@ export default function Editor({ $target, initialState, onDelete }) {
   this.render = () => {
     $editor.innerHTML = ''
 
-    const titleComponent = new Title({ initialState: this.state })
-    const contentComponent = new Content({ initialState: this.state, onDelete })
+    const $title = new Title({ initialState: this.state })
+    const $content = new Content({ initialState: this.state, onDelete })
 
-    $editor.appendChild(titleComponent)
-    $editor.appendChild(contentComponent)
+    $editor.appendChild($title)
+    $editor.appendChild($content)
   }
 
   this.render()
