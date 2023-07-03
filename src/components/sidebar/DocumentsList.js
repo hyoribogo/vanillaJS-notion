@@ -41,7 +41,7 @@ export default function DocumentsList({
       html += '</ul>'
     } else {
       html += `
-        <ul class="nested ${isHiddenClass}">
+        <ul class="nested ${isHiddenClass} null">
           <li>하위 페이지 없음</li>
         </ul>`
     }
@@ -63,16 +63,18 @@ export default function DocumentsList({
     const $documentsList = $documents.querySelectorAll('li')
 
     $documentsList.forEach(($document) => {
-      $document.addEventListener('click', (e) => {
+      $document.addEventListener('click', async (e) => {
         const { id } = $document.dataset
         const { target } = e
         e.stopPropagation()
 
+        this.setState([...this.state])
+
         if (target.closest('.toggle')) {
           onToggle(target, id)
-          this.render() // 낙관적 업데이트
         } else if (target.closest('.add')) {
           onAdd(id ? id : null)
+          onToggle($document.querySelector('.toggle'), id, target.className)
         } else if (target.closest('.delete')) {
           onDelete(id)
         } else if (target.closest('.document')) {

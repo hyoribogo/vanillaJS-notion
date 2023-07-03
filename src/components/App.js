@@ -34,14 +34,17 @@ export default function App({ $target, initialState }) {
         title: "제목 없음",
         parent: id ? id : null
       }
-
+      
       const newDocument = await createDocument(data)
       navigate(`/${newDocument.id}`)
+
+      return newDocument.id
     },
-    onToggle: async (target, id) => {
+    onToggle: async (target, id, event = '') => {
       const $toggle = target.closest('.toggle')
       const $nestedList = $toggle.closest('li').querySelector('.nested')
-      $nestedList.classList.toggle('hidden')
+      if (event !== 'add' || $nestedList.classList.contains('hidden'))
+        $nestedList.classList.toggle('hidden')
 
       const isOpen = !$nestedList.classList.contains('hidden')
       saveToggleState(id, isOpen)
