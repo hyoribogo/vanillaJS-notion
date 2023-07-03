@@ -1,3 +1,5 @@
+import NotFoundPage from '../pages/NotFoundPage'
+
 const API_END_POINT = "https://kdt-frontend.programmers.co.kr/documents"
 
 const request = async (url = "", options = {}) => {
@@ -10,9 +12,18 @@ const request = async (url = "", options = {}) => {
       return await res.json()
     }
 
+    if (res.status === 404) {
+      throw new Error("Not Found")
+    }
+
     throw new Error("API 처리 중 에러가 발생했습니다.")
   } catch (e) {
-    alert(e.message)
+    console.log(e.message)
+    if (e.message === "Not Found") {
+      const $target = document.querySelector('#app')
+      $target.innerHTML = ''
+      new NotFoundPage({ $target })
+    }
   }
 }
 
