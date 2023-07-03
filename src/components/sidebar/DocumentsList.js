@@ -73,8 +73,12 @@ export default function DocumentsList({
         if (target.closest('.toggle')) {
           onToggle(target, id)
         } else if (target.closest('.add')) {
-          onAdd(id ? id : null)
-          onToggle($document.querySelector('.toggle'), id, target.className)
+          if (id) {
+            onAdd(id)
+            onToggle($document.querySelector('.toggle'), id, target.className)
+          } else {
+            onAdd()
+          }
         } else if (target.closest('.delete')) {
           onDelete(id)
         } else if (target.closest('.document')) {
