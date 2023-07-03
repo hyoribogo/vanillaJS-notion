@@ -1,8 +1,11 @@
+import { getItem, setItem } from '../../utils/storage'
+
 export default function DocumentsList({
   $target,
   initialState,
   onClick,
   onAdd,
+  onToggle,
 }) {
   const $documents = document.createElement('div')
   $target.appendChild($documents)
@@ -13,23 +16,35 @@ export default function DocumentsList({
     this.state = nextState
     this.render()
   }
+  
+  const toggleStateKey = (id) => `toggleState_${id}`
 
-  const renderDocumentsTree = ({ documents, title, id }) => {
-    // 일단 id도 뜨게 구현
+  const renderDocument = (document) => {
+    const { id, title, documents } = document
+    const toggleState = getItem(toggleStateKey(id), false)
+    const isHiddenClass = toggleState ? '' : 'hidden'
+
     let html = `
-      <li data-id="${id}">
+      <li data-id="${id}" class="document">
+        <button class="toggle">Toggle</button>
         <span>[${id}] ${title}</span>
-        <button>+</button>
-      </li>
-      `
+        <button class="add">+</button>
+    `
 
-    if (documents.length) {
-      html += "<ul>"
+    if (documents.length && toggleState) {
+      html += `<ul class="nested ${isHiddenClass}">`
       documents.forEach((subDocument) => {
-        html += `${renderDocumentsTree(subDocument)}`
+        html += `${renderDocument(subDocument)}`
       })
-      html += "</ul>"
+      html += '</ul>'
+    } else {
+      html += `
+        <ul class="nested ${isHiddenClass}">
+          <li>하위 페이지 없음</li>
+        </ul>`
     }
+
+    html += '</li>'
 
     return html
   }
@@ -38,23 +53,26 @@ export default function DocumentsList({
     $documents.innerHTML = `
       <ul>
         ${this.state.map((document) => 
-          `${renderDocumentsTree(document)}`).join('')}
-        <li><button>+ 페이지 추가</button></li>
+          `${renderDocument(document)}`).join('')}
+        <li><button class="add">+ 페이지 추가</button></li>
       </ul>
     `
 
     const $documentsList = $documents.querySelectorAll('li')
 
     $documentsList.forEach(($document) => {
-      $document.addEventListener('click', ({ target }) => {
+      $document.addEventListener('click', (e) => {
         const { id } = $document.dataset
+        const { target } = e
+        e.stopPropagation()
 
-        if (target.closest('span')) {
-          onClick(id)
-        }
-
-        if (target.closest('button')) {
+        if (target.closest('.toggle')) {
+          onToggle(target, id)
+          this.render() // 낙관적 업데이트
+        } else if (target.closest('.add')) {
           onAdd(id ? id : null)
+        } else if (target.closest('.document')) {
+          id && onClick(id)
         }
       })
     })

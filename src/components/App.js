@@ -1,4 +1,5 @@
 import { createDocument, deleteSpecificDocument, getRootDocument, getSpecificDocument } from '../api/api'
+import { setItem } from '../utils/storage'
 import Content from './editor/Content'
 import DocumentsList from './sidebar/DocumentsList'
 
@@ -37,7 +38,23 @@ export default function App({ $target, initialState }) {
       const newDocument = await createDocument(data)
       navigate(`/${newDocument.id}`)
     },
+    onToggle: async (target, id) => {
+      const $toggle = target.closest('.toggle')
+      const $nestedList = $toggle.closest('li').querySelector('.nested')
+      $nestedList.classList.toggle('hidden')
+
+      const isOpen = !$nestedList.classList.contains('hidden')
+      saveToggleState(id, isOpen)
+      fetchDocumentsData()
+    }
   })
+
+  const toggleStateKey = (id) => `toggleState_${id}`
+
+  const saveToggleState = (id, isOpen) => {
+    const key = toggleStateKey(id)
+    setItem(key, isOpen)
+  }
 
   const content = new Content({
     $target: $notionPage,
