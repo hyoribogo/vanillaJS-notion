@@ -16,15 +16,17 @@ export default function DocumentsList({
 
   const renderDocumentsTree = ({ documents, title, id }) => {
     // 일단 id도 뜨게 구현
-    let html = `<li data-id="${id}">
-                  <span>[${id}] ${title}</span>
-                  <button>+</button>
-                </li>`
+    let html = `
+      <li data-id="${id}">
+        <span>[${id}] ${title}</span>
+        <button>+</button>
+      </li>
+      `
 
     if (documents.length) {
       html += "<ul>"
-      documents.forEach((subdocument) => {
-        html += `${renderDocumentsTree(subdocument)}`
+      documents.forEach((subDocument) => {
+        html += `${renderDocumentsTree(subDocument)}`
       })
       html += "</ul>"
     }

@@ -24,8 +24,8 @@ export default function Content({ $target, initialState, onDelete }) {
 
       ${documents.length ? `
           <ul>
-            ${documents.map((subdocument) => 
-              `<li><span>${subdocument.title}</span></li>`
+            ${documents.map((subDocument) => 
+              `<li><span>${subDocument.title}</span></li>`
             ).join('')}
           </ul>
         ` : ''
