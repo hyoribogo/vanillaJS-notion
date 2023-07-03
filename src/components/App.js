@@ -2,6 +2,7 @@ import { createDocument, deleteSpecificDocument, getRootDocument, getSpecificDoc
 import { setItem } from '../utils/storage'
 import Editor from './editor/Editor'
 import DocumentsList from './sidebar/DocumentsList'
+import Sidebar from './sidebar/Sidebar'
 
 export default function App({ $target, initialState }) {
   const $mainPage = document.createElement('div')
@@ -12,7 +13,7 @@ export default function App({ $target, initialState }) {
 
   this.setDocuments = (nextDocuments) => {
     this.documents = nextDocuments
-    documentsList.setState(nextDocuments)
+    sidebar.setState(nextDocuments)
   }
 
   // document editor state
@@ -23,7 +24,7 @@ export default function App({ $target, initialState }) {
     editor.setState(nextContent)
   }
 
-  const documentsList = new DocumentsList({ 
+  const sidebar = new Sidebar({ 
     $target: $mainPage, 
     initialState: this.documents,
     onClick: (id) => {

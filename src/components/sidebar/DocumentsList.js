@@ -1,15 +1,13 @@
-import { getItem, setItem } from '../../utils/storage'
+import { getItem } from '../../utils/storage'
 
 export default function DocumentsList({
-  $target,
   initialState,
   onClick,
   onAdd,
   onToggle,
-  onDelete,
+  onDelete
 }) {
   const $documents = document.createElement('div')
-  $target.appendChild($documents)
 
   this.state = initialState
 
@@ -17,7 +15,7 @@ export default function DocumentsList({
     this.state = nextState
     this.render()
   }
-  
+
   const toggleStateKey = (id) => `toggleState_${id}`
 
   const renderDocument = (document) => {
@@ -54,8 +52,8 @@ export default function DocumentsList({
   this.render = () => {
     $documents.innerHTML = `
       <ul>
-        ${this.state.map((document) => 
-          `${renderDocument(document)}`).join('')}
+        ${this.state.map((document) =>
+      `${renderDocument(document)}`).join('')}
         <li><button class="add">+ 페이지 추가</button></li>
       </ul>
     `
@@ -89,4 +87,6 @@ export default function DocumentsList({
   }
 
   this.render()
+
+  return $documents
 }
