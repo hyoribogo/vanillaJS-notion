@@ -1,6 +1,6 @@
 import { createDocument, deleteSpecificDocument, getRootDocument, getSpecificDocument } from '../api/api'
-import Content from '../components/Content'
-import DocumentsList from '../components/DocumentsList'
+import Content from './sidebar/Content'
+import DocumentsList from './editor/DocumentsList'
 
 export default function App({ $target, initialState }) {
   const $notionPage = document.createElement('div')
@@ -26,7 +26,7 @@ export default function App({ $target, initialState }) {
     $target: $notionPage, 
     initialState: this.documents,
     onClick: (id) => {
-      fetchContentData(id)
+      navigate(`/${id}`)
     },
     onAdd: async (id) => {
       const data = {
@@ -35,9 +35,7 @@ export default function App({ $target, initialState }) {
       }
 
       const newDocument = await createDocument(data)
-
-      fetchDocumentsData()
-      fetchContentData(newDocument.id)
+      navigate(`/${newDocument.id}`)
     },
   })
 
@@ -46,12 +44,10 @@ export default function App({ $target, initialState }) {
     initialState: this.editorContent,
     onDelete: async (id) => {
       await deleteSpecificDocument(id)
-      fetchDocumentsData()
-      fetchContentData()
+      navigate('/')
     }
   })
 
-  // 함수 파일 작성하기
   // 전체 documentsList 불러오기
   const fetchDocumentsData = async () => {
     const documents = await getRootDocument()
@@ -59,14 +55,40 @@ export default function App({ $target, initialState }) {
   }
 
   // 특정 document의 content 불러오기
-  const fetchContentData = async (id = null) => {
-    if (id) {
-      const content = await getSpecificDocument(id)
-      this.setEditorContent(content)
-    } else {
-      this.setEditorContent(null)
-    }
+  const fetchContentData = async () => {
+    const id = location.pathname.substring(1)
+    const content = id ? await getSpecificDocument(id) : null
+
+    this.setEditorContent(content)
   }
 
-  fetchDocumentsData()
+  // 라우팅 구현
+  const navigate = (path) => {
+    const { pathname } = location
+
+    if (pathname === path) {
+      window.history.replaceState(null, null, path)
+    } else {
+      window.history.pushState(null, null, path)
+    }
+
+    this.route()
+  }
+
+  this.route = () => {
+    const { pathname } = location
+    if (pathname === '/404') {
+      // 404 페이지
+      return
+    }
+
+    fetchDocumentsData()
+    fetchContentData()
+  }
+
+  this.init = () => {
+    this.route()
+  }
+
+  this.init()
 }
