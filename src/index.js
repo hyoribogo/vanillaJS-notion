@@ -6,6 +6,6 @@ new App({
   $target,
   initialState: {
     documents: [],
-    editorContent: null
+    editorContent: {}
   }
 })

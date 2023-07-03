@@ -1,6 +1,5 @@
-export default function Content({ $target, initialState, onDelete }) {
+export default function Content({ initialState }) {
   const $content = document.createElement('div')
-  $target.appendChild($content)
 
   this.state = initialState
 
@@ -15,27 +14,20 @@ export default function Content({ $target, initialState, onDelete }) {
       return
     }
 
-    const { id, title, content, documents } = this.state
+    const { content, documents } = this.state
 
-    $content.innerHTML = `
-      <h1>[${id}] ${title}</h1>
-      <button>X</button>
+    if (documents) {
+      $content.innerHTML = this.state ? `
       <textarea>${content ? content : ''}</textarea>
-
-      ${documents.length ? `
-          <ul>
-            ${documents.map((subDocument) => 
-              `<li><span>${subDocument.title}</span></li>`
-            ).join('')}
-          </ul>
-        ` : ''
-      }
-    `
-
-    const $deleteButton = $content.querySelector('button')
-
-    $deleteButton.addEventListener('click', () => {
-      onDelete(id)
-    })
+      <ul class="sub-documents-list">
+        ${documents.map((subDocument) => 
+          `<li data-id="${subDocument.id}"><span>${subDocument.title}</span></li>`
+        ).join('')}
+      </ul>` : ''
+    }
   }
+
+  this.render()
+
+  return $content
 }

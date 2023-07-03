@@ -1,11 +1,11 @@
 import { createDocument, deleteSpecificDocument, getRootDocument, getSpecificDocument } from '../api/api'
 import { setItem } from '../utils/storage'
-import Content from './editor/Content'
+import Editor from './editor/Editor'
 import DocumentsList from './sidebar/DocumentsList'
 
 export default function App({ $target, initialState }) {
-  const $notionPage = document.createElement('div')
-  $target.appendChild($notionPage)
+  const $mainPage = document.createElement('div')
+  $target.appendChild($mainPage)
 
   // documents list state
   this.documents = initialState.documents
@@ -20,11 +20,11 @@ export default function App({ $target, initialState }) {
 
   this.setEditorContent = (nextContent) => {
     this.editorContent = nextContent
-    content.setState(nextContent)
+    editor.setState(nextContent)
   }
 
   const documentsList = new DocumentsList({ 
-    $target: $notionPage, 
+    $target: $mainPage, 
     initialState: this.documents,
     onClick: (id) => {
       navigate(`/${id}`)
@@ -69,8 +69,8 @@ export default function App({ $target, initialState }) {
     setItem(key, isOpen)
   }
 
-  const content = new Content({
-    $target: $notionPage,
+  const editor = new Editor({
+    $target: $mainPage,
     initialState: this.editorContent,
     onDelete: async (id) => {
       await deleteSpecificDocument(id)
