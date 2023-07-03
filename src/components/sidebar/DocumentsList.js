@@ -6,6 +6,7 @@ export default function DocumentsList({
   onClick,
   onAdd,
   onToggle,
+  onDelete,
 }) {
   const $documents = document.createElement('div')
   $target.appendChild($documents)
@@ -28,6 +29,7 @@ export default function DocumentsList({
       <li data-id="${id}" class="document">
         <button class="toggle">Toggle</button>
         <span>[${id}] ${title}</span>
+        <button class="delete">X</button>
         <button class="add">+</button>
     `
 
@@ -71,6 +73,8 @@ export default function DocumentsList({
           this.render() // 낙관적 업데이트
         } else if (target.closest('.add')) {
           onAdd(id ? id : null)
+        } else if (target.closest('.delete')) {
+          onDelete(id)
         } else if (target.closest('.document')) {
           id && onClick(id)
         }

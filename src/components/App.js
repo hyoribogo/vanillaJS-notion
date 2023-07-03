@@ -46,6 +46,16 @@ export default function App({ $target, initialState }) {
       const isOpen = !$nestedList.classList.contains('hidden')
       saveToggleState(id, isOpen)
       fetchDocumentsData()
+    },
+    onDelete: async (id) => {
+      const pathId = location.pathname.substring(1)
+
+      await deleteSpecificDocument(id)
+      if (pathId === id) {
+        navigate('/')
+      } else {
+        fetchDocumentsData()
+      }
     }
   })
 
