@@ -1,3 +1,4 @@
+import { ENV } from '../../utils/constants'
 import { getItem } from '../../utils/storage'
 
 export default function DocumentsList({
@@ -16,11 +17,9 @@ export default function DocumentsList({
     this.render()
   }
 
-  const TOGGLE_STATE_SAVE_KEY = 'toggle-state'
-
   const renderDocument = (document) => {
     const { id, title, documents } = document
-    const toggleState = getItem(TOGGLE_STATE_SAVE_KEY)
+    const toggleState = getItem(ENV.TOGGLE_STATE_SAVE_KEY)
     const isHiddenClass = toggleState?.[id] ? '' : 'hidden'
 
     let html = `

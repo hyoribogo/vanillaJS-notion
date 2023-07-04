@@ -8,6 +8,7 @@ import {
 } from '../utils/fetchData'
 import { getItem, setItem } from '../utils/storage'
 import { editSpecificDocument } from '../api/api'
+import { ENV } from '../utils/constants'
 
 export default function MainPage({ $target }) {
   const $main = document.createElement('div')
@@ -60,17 +61,15 @@ export default function MainPage({ $target }) {
     },
   })
 
-  const TEMP_POST_SAVE_KEY = 'temp-post'
-  const TOGGLE_STATE_SAVE_KEY = 'toggle-state'
   let timer = null
 
   const saveToggleState = (id, isOpen) => {
-    const currState = getItem(TOGGLE_STATE_SAVE_KEY)
+    const currState = getItem(ENV.TOGGLE_STATE_SAVE_KEY)
     const nextState = {
       ...currState,
       [id]: isOpen,
     }
-    setItem(TOGGLE_STATE_SAVE_KEY, nextState)
+    setItem(ENV.TOGGLE_STATE_SAVE_KEY, nextState)
   }
 
   const editor = new Editor({
@@ -81,14 +80,14 @@ export default function MainPage({ $target }) {
       }
       // 디바운스
       timer = setTimeout(async () => {
-        const currState = getItem(TEMP_POST_SAVE_KEY)
+        const currState = getItem(ENV.TEMP_POST_SAVE_KEY)
         const { id, title, content } = post
 
         const nextState = {
           ...currState,
           [id]: post,
         }
-        setItem(TEMP_POST_SAVE_KEY, nextState)
+        setItem(ENV.TEMP_POST_SAVE_KEY, nextState)
         const res = await editSpecificDocument(id, {
           title,
           content,

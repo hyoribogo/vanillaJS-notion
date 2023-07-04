@@ -1,10 +1,9 @@
 import NotFoundPage from '../pages/NotFoundPage'
-
-const API_END_POINT = 'https://kdt-frontend.programmers.co.kr/documents'
+import { ENV } from '../utils/constants'
 
 const request = async (url = '', options = {}) => {
   try {
-    const res = await fetch(`${API_END_POINT}${url}`, {
+    const res = await fetch(`${ENV.API_END_POINT}${url}`, {
       ...options,
     })
 
@@ -34,7 +33,7 @@ const fetchData = async (url, method = 'GET', data = null) => {
     method,
     headers: {
       'Content-Type': 'application/json',
-      'x-username': 'hyoribogo',
+      'x-username': ENV.USER_NAME,
     },
     body: data ? JSON.stringify(data) : null,
   }
@@ -44,39 +43,31 @@ const fetchData = async (url, method = 'GET', data = null) => {
 }
 
 // 전체 Document 목록 불러오기 GET
-const getRootDocument = async () => {
+export const getRootDocument = async () => {
   const res = await fetchData('')
   return res
 }
 
 // 특정 Document 불러오기 GET
-const getSpecificDocument = async (id) => {
+export const getSpecificDocument = async (id) => {
   const res = await fetchData(id)
   return res
 }
 
 // Document 생성하기 POST
-const createDocument = async (data) => {
+export const createDocument = async (data) => {
   const res = await fetchData('', 'POST', data)
   return res
 }
 
 // 특정 Document 수정하기 PUT
-const editSpecificDocument = async (id, data) => {
+export const editSpecificDocument = async (id, data) => {
   const res = await fetchData(id, 'PUT', data)
   return res
 }
 
 // 특정 Document 삭제하기 DELETE
-const deleteSpecificDocument = async (id) => {
+export const deleteSpecificDocument = async (id) => {
   const res = await fetchData(id, 'DELETE')
   return res
-}
-
-export {
-  getRootDocument,
-  getSpecificDocument,
-  createDocument,
-  editSpecificDocument,
-  deleteSpecificDocument,
 }
