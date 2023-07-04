@@ -31,8 +31,6 @@ export default function Editor({ $target, onEdit, onClick }) {
     keyupListener = ({ target }) => {
       const name = target.closest('div').className
 
-      console.log(name)
-
       const nextState = {
         ...this.state,
         [name]: target.value,

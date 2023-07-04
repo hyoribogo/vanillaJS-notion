@@ -34,8 +34,11 @@ export default function Content({ initialState, onClick, onToggle }) {
     }
 
     $content.addEventListener('click', ({ target }) => {
-      const subId = target.closest('li').dataset.id
-      onClick(subId)
+      const $subDocument = target.closest('li')
+      if ($subDocument) {
+        const subId = $subDocument.dataset.id
+        onClick(subId)
+      }
 
       // 현재 id 토글하기
     })
