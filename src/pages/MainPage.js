@@ -4,13 +4,14 @@ import {
   fetchRootDocument,
   fetchSpecificDocument,
   createNewDocument,
-  deleteDocument
+  deleteDocument,
 } from '../utils/fetchData'
-import { setItem } from '../utils/storage'
+import { getItem, setItem } from '../utils/storage'
+import { editSpecificDocument } from '../api/api'
 
 export default function MainPage({ $target }) {
-  this.$mainPage = document.createElement('div')
-  $target.appendChild(this.$mainPage)
+  const $main = document.createElement('div')
+  $target.appendChild($main)
 
   this.documents = []
 
@@ -19,8 +20,15 @@ export default function MainPage({ $target }) {
     sidebar.setState(nextDocuments)
   }
 
+  this.content = []
+
+  this.setContent = (nextDocuments) => {
+    this.content = nextDocuments
+    editor.setState(nextDocuments)
+  }
+
   const sidebar = new Sidebar({
-    $target: this.$mainPage,
+    $target: $main,
     initialState: this.documents,
     onClick: (id) => {
       navigate(`/documents/${id}`)
@@ -49,22 +57,46 @@ export default function MainPage({ $target }) {
       } else {
         fetchDocumentsData()
       }
-    }
+    },
   })
 
-  const toggleStateKey = (id) => `toggleState_${id}`
+  const TEMP_POST_SAVE_KEY = 'temp-post'
+  const TOGGLE_STATE_SAVE_KEY = 'toggle-state'
+  let timer = null
 
   const saveToggleState = (id, isOpen) => {
-    const key = toggleStateKey(id)
-    setItem(key, isOpen)
+    const currState = getItem(TOGGLE_STATE_SAVE_KEY)
+    const nextState = {
+      ...currState,
+      [id]: isOpen,
+    }
+    setItem(TOGGLE_STATE_SAVE_KEY, nextState)
   }
 
   const editor = new Editor({
-    $target: this.$mainPage,
-    onDelete: async (id) => {
-      await deleteDocument(id)
-      navigate('/')
-    }
+    $target: $main,
+    onEdit: async (post) => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+      // 디바운스
+      timer = setTimeout(async () => {
+        const currState = getItem(TEMP_POST_SAVE_KEY)
+        const { id, title, content } = post
+
+        const nextState = {
+          ...currState,
+          [id]: post,
+        }
+        setItem(TEMP_POST_SAVE_KEY, nextState)
+        const res = await editSpecificDocument(id, {
+          title,
+          content,
+        })
+
+        fetchDocumentsData()
+      }, 1000)
+    },
   })
 
   const fetchDocumentsData = async () => {
@@ -76,7 +108,7 @@ export default function MainPage({ $target }) {
     const id = location.pathname.split('/').at(-1)
     const content = id ? await fetchSpecificDocument(id) : null
 
-    editor.setState(content)
+    this.setContent(content)
   }
 
   const navigate = (path) => {
@@ -88,16 +120,16 @@ export default function MainPage({ $target }) {
       window.history.pushState(null, null, path)
     }
 
-    this.route()
+    this.fetchData()
   }
 
-  this.route = () => {
+  this.fetchData = () => {
     fetchDocumentsData()
     fetchContentData()
   }
 
   this.init = () => {
-    this.route()
+    this.fetchData()
   }
 
   this.init()

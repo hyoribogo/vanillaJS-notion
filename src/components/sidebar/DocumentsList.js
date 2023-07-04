@@ -5,7 +5,7 @@ export default function DocumentsList({
   onClick,
   onAdd,
   onToggle,
-  onDelete
+  onDelete,
 }) {
   const $documents = document.createElement('div')
 
@@ -16,17 +16,17 @@ export default function DocumentsList({
     this.render()
   }
 
-  const toggleStateKey = (id) => `toggleState_${id}`
+  const TOGGLE_STATE_SAVE_KEY = 'toggle-state'
 
   const renderDocument = (document) => {
     const { id, title, documents } = document
-    const toggleState = getItem(toggleStateKey(id), false)
-    const isHiddenClass = toggleState ? '' : 'hidden'
+    const toggleState = getItem(TOGGLE_STATE_SAVE_KEY)
+    const isHiddenClass = toggleState?.[id] ? '' : 'hidden'
 
     let html = `
       <li data-id="${id}" class="document">
         <button class="toggle">Toggle</button>
-        <span>[${id}] ${title}</span>
+        <span>[${id}] ${title.length ? title : '제목 없음'}</span>
         <button class="delete">X</button>
         <button class="add">+</button>
     `
@@ -52,8 +52,7 @@ export default function DocumentsList({
   this.render = () => {
     $documents.innerHTML = `
       <ul>
-        ${this.state.map((document) =>
-      `${renderDocument(document)}`).join('')}
+        ${this.state.map((document) => `${renderDocument(document)}`).join('')}
         <li><button class="add">+ 페이지 추가</button></li>
       </ul>
     `
