@@ -1,4 +1,4 @@
-import Router from '../routes/Router'
+import Router from '../routes/router'
 
 export default function App({ $target }) {
   const router = new Router({ $target })
