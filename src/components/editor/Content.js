@@ -22,9 +22,14 @@ export default function Content({ initialState }) {
       $content.innerHTML = `
       <textarea>${content ? content : ''}</textarea>
       <ul class="sub-documents-list">
-        ${documents.map((subDocument) => 
-          `<li data-id="${subDocument.id}"><span>${subDocument.title.length ? subDocument.title : "제목 없음"}</span></li>`
-        ).join('')}
+        ${documents
+          .map(
+            (subDocument) =>
+              `<li data-id="${subDocument.id}"><span>${
+                subDocument.title.length ? subDocument.title : '제목 없음'
+              }</span></li>`,
+          )
+          .join('')}
       </ul>`
     }
   }

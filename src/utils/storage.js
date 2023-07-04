@@ -4,7 +4,7 @@ const getItem = (key, defaultValue) => {
   try {
     const storedValue = storage.getItem(key)
     return storedValue ? JSON.parse(storedValue) : defaultValue
-  } catch(e) {
+  } catch (e) {
     return defaultValue
   }
 }

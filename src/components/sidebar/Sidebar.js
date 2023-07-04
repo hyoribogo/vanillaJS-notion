@@ -7,7 +7,8 @@ export default function Sidebar({
   onClick,
   onAdd,
   onToggle,
-  onDelete, }) {
+  onDelete,
+}) {
   const $sidebar = document.createElement('div')
   $target.appendChild($sidebar)
 
@@ -27,7 +28,7 @@ export default function Sidebar({
       onClick,
       onAdd,
       onToggle,
-      onDelete
+      onDelete,
     })
 
     $sidebar.appendChild($header)
