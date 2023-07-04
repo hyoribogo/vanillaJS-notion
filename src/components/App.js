@@ -1,7 +1,7 @@
-import Router from '../routes/router'
+import PageRouter from '../routes/PageRouter'
 
 export default function App({ $target }) {
-  const router = new Router({ $target })
+  const router = new PageRouter({ $target })
 
   this.init = () => {
     router.init()

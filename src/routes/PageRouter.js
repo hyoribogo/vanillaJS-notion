@@ -1,7 +1,7 @@
 import MainPage from '../pages/MainPage'
 import NotFoundPage from '../pages/NotFoundPage'
 
-export default function Router({ $target }) {
+export default function PageRouter({ $target }) {
   this.init = () => {
     this.route()
 
