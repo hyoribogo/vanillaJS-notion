@@ -97,6 +97,9 @@ export default function MainPage({ $target }) {
         fetchDocumentsData()
       }, 1000)
     },
+    onClick: (id) => {
+      navigate(`/documents/${id}`)
+    },
   })
 
   const fetchDocumentsData = async () => {

@@ -1,7 +1,7 @@
 import Content from './Content.js'
 import Title from './Title.js'
 
-export default function Editor({ $target, onEdit }) {
+export default function Editor({ $target, onEdit, onClick }) {
   const $editor = document.createElement('div')
   $target.appendChild($editor)
 
@@ -18,7 +18,7 @@ export default function Editor({ $target, onEdit }) {
     $editor.innerHTML = ''
 
     const $title = new Title({ initialState: this.state })
-    const $content = new Content({ initialState: this.state })
+    const $content = new Content({ initialState: this.state, onClick })
 
     $editor.appendChild($title)
     $editor.appendChild($content)

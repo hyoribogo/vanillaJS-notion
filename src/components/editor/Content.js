@@ -1,4 +1,4 @@
-export default function Content({ initialState }) {
+export default function Content({ initialState, onClick, onToggle }) {
   const $content = document.createElement('div')
   $content.classList.add('content')
 
@@ -25,13 +25,20 @@ export default function Content({ initialState }) {
         ${documents
           .map(
             (subDocument) =>
-              `<li data-id="${subDocument.id}"><span>${
+              `<li class="sub-document" data-id="${subDocument.id}"><span>${
                 subDocument.title.length ? subDocument.title : '제목 없음'
               }</span></li>`,
           )
           .join('')}
       </ul>`
     }
+
+    $content.addEventListener('click', ({ target }) => {
+      const subId = target.closest('li').dataset.id
+      onClick(subId)
+
+      // 현재 id 토글하기
+    })
   }
 
   this.render()

@@ -26,10 +26,6 @@ export default function Title({ initialState }) {
         <input class="untitled" placeholder="제목 없음" />
       `
     }
-
-    // $title.addEventListener('keyup', e => {
-    //   console.log(e.target.value)
-    // })
   }
 
   this.render()
