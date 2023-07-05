@@ -1,6 +1,7 @@
-export default function SidebarHeader({ initialState }) {
-  const $header = document.createElement('header')
-  $header.classList.add('header')
+import { createComponent } from '../../utils/domUtils'
+
+export default function SidebarHeader() {
+  const $header = createComponent('div', 'header')
 
   this.render = () => {
     $header.innerHTML = `

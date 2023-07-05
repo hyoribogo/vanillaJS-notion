@@ -1,8 +1,9 @@
+import { createComponent } from '../../utils/domUtils.js'
 import Content from './Content.js'
 import Title from './Title.js'
 
 export default function Editor({ $target, initialState, onEdit, onClick }) {
-  const $editor = document.createElement('div')
+  const $editor = createComponent('div', 'editor')
   $target.appendChild($editor)
 
   this.state = initialState

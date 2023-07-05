@@ -1,6 +1,7 @@
+import { createComponent } from '../../utils/domUtils'
+
 export default function Title({ initialState }) {
-  const $title = document.createElement('div')
-  $title.classList.add('title')
+  const $title = createComponent('div', 'title')
 
   this.state = initialState
 

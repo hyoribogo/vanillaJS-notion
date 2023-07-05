@@ -1,6 +1,7 @@
+import { createComponent } from '../../utils/domUtils'
+
 export default function Content({ initialState, onClick }) {
-  const $content = document.createElement('div')
-  $content.classList.add('content')
+  const $content = createComponent('div', 'content')
 
   this.state = initialState
 

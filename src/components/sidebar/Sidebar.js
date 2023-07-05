@@ -1,3 +1,4 @@
+import { createComponent } from '../../utils/domUtils'
 import DocumentsList from './DocumentsList'
 import SidebarHeader from './SidebarHeader'
 
@@ -9,7 +10,7 @@ export default function Sidebar({
   onToggle,
   onDelete,
 }) {
-  const $sidebar = document.createElement('div')
+  const $sidebar = createComponent('div', 'sidebar')
   $target.appendChild($sidebar)
 
   this.state = initialState
@@ -22,7 +23,7 @@ export default function Sidebar({
   this.render = () => {
     $sidebar.innerHTML = ''
 
-    const $header = new SidebarHeader({ initialState: this.state })
+    const $header = new SidebarHeader()
     const $documents = new DocumentsList({
       initialState: this.state,
       onClick,

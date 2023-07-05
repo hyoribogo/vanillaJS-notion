@@ -1,4 +1,5 @@
 import { ENV } from '../../utils/constants'
+import { createComponent } from '../../utils/domUtils'
 import { getItem } from '../../utils/storage'
 
 export default function DocumentsList({
@@ -8,7 +9,7 @@ export default function DocumentsList({
   onToggle,
   onDelete,
 }) {
-  const $documents = document.createElement('div')
+  const $documents = createComponent('div', 'documents')
 
   this.state = initialState
 

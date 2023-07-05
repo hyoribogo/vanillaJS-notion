@@ -1,11 +1,6 @@
-export function createComponent(tagName, options = {}) {
-  const { className, text, attribute, event } = options
+export function createComponent(tagName, className) {
   const element = document.createElement(tagName)
-
-  className && (element.className = className)
-  text && (element.textContent = textContent)
-  attribute && element.setAttribute(attrName, attrValue)
-  event && eventHandler(element, event.type, event.handler)
+  element.classList.add(className)
 
   return element
 }
