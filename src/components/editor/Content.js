@@ -1,4 +1,4 @@
-import { contentTemplate } from '../../templates/editorTemplates'
+import { contentTemplate } from '../../templates/mainPageTemplates'
 import { createComponent } from '../../utils/domUtils'
 
 export default function Content({ initialState, onClick }) {

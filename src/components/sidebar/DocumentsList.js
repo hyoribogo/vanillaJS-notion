@@ -1,4 +1,4 @@
-import { documentsListTemplate } from '../../templates/SidebarTemplates'
+import { documentsListTemplate } from '../../templates/mainPageTemplates'
 import { createComponent } from '../../utils/domUtils'
 
 export default function DocumentsList({

@@ -1,4 +1,4 @@
-import { sidebarHeaderTemplate } from '../../templates/SidebarTemplates'
+import { sidebarHeaderTemplate } from '../../templates/mainPageTemplates'
 import { createComponent } from '../../utils/domUtils'
 
 export default function SidebarHeader() {

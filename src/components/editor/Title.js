@@ -1,4 +1,4 @@
-import { titleTemplate } from '../../templates/editorTemplates'
+import { titleTemplate } from '../../templates/mainPageTemplates'
 import { createComponent } from '../../utils/domUtils'
 
 export default function Title({ initialState }) {

@@ -12,6 +12,10 @@ export default function App({ $target }) {
     this.route()
   }
 
+  const updateState = (targetState, id) => {
+    fetchMainData(main, targetState, id)
+  }
+
   this.route = () => {
     const { pathname } = location
     const isMain = pathname === '/'
@@ -29,8 +33,4 @@ export default function App({ $target }) {
   }
 
   this.init()
-
-  function updateState(targetState, id) {
-    fetchMainData(main, targetState, id)
-  }
 }
