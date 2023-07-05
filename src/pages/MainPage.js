@@ -20,7 +20,7 @@ export default function MainPage({ $target, updateState }) {
     sidebar.setState(nextDocuments)
   }
 
-  this.content = {}
+  this.content = null
 
   this.setContent = (nextDocuments) => {
     this.content = nextDocuments

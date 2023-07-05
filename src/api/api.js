@@ -50,7 +50,7 @@ export const getRootDocument = async () => {
 
 // 특정 Document 불러오기 GET
 export const getSpecificDocument = async (id) => {
-  if (!id) return {}
+  if (!id) return null
 
   const res = await fetchData(id)
   return res

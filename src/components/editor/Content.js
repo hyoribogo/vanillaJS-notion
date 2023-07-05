@@ -3,7 +3,6 @@ export default function Content({ initialState, onClick }) {
   $content.classList.add('content')
 
   this.state = initialState
-  this.input = this.state.content
 
   this.setState = (nextState) => {
     this.state = nextState
