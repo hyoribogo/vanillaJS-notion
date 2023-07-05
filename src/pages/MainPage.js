@@ -11,8 +11,10 @@ import { navigate } from '../routes/URLRouter'
 import { createComponent } from '../utils/domUtils'
 
 export default function MainPage({ $target, updateState }) {
-  const $main = createComponent('div', 'main')
-  $target.appendChild($main)
+  const $main = createComponent('div', {
+    className: 'main',
+    parentElement: $target,
+  })
 
   this.documents = []
 
@@ -23,9 +25,9 @@ export default function MainPage({ $target, updateState }) {
 
   this.content = null
 
-  this.setContent = (nextDocuments) => {
-    this.content = nextDocuments
-    editor.setState(nextDocuments)
+  this.setContent = (nextContent) => {
+    this.content = nextContent
+    editor.setState(nextContent)
   }
 
   const sidebar = new Sidebar({
@@ -59,6 +61,7 @@ export default function MainPage({ $target, updateState }) {
       if (pathId === id) {
         navigate('/')
         updateState(DATA.DOCUMENT)
+        editor.setState(null)
       } else {
         updateState(DATA.DOCUMENT)
       }
@@ -79,7 +82,7 @@ export default function MainPage({ $target, updateState }) {
   const editor = new Editor({
     $target: $main,
     initialState: this.content,
-    onEdit: async (post) => {
+    onEdit: async (post, name) => {
       if (timer) {
         clearTimeout(timer)
       }
@@ -94,9 +97,9 @@ export default function MainPage({ $target, updateState }) {
         }
         setItem(ENV.TEMP_POST_SAVE_KEY, nextState)
         await editDocument(id, title, content)
-        // 내용만 변경 시에는 content만 변하게 구현하기
-        // 토글 열리는 버그 수정하기
-        updateState(DATA.ALL, id)
+
+        name === 'content' && updateState(DATA.CONTENT, id)
+        name === 'title' && updateState(DATA.ALL, id)
       }, 1000)
     },
     onClick: (id) => {

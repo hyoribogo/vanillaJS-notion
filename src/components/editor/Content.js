@@ -1,8 +1,15 @@
 import { contentTemplate } from '../../templates/mainPageTemplates'
-import { createComponent } from '../../utils/domUtils'
+import {
+  createComponent,
+  addEventHandler,
+  handleSubsClick,
+} from '../../utils/domUtils'
 
-export default function Content({ initialState, onClick }) {
-  const $content = createComponent('div', 'content')
+export default function Content({ $target, initialState, onClick }) {
+  const $content = createComponent('div', {
+    className: 'content',
+    parentElement: $target,
+  })
 
   this.state = initialState
 
@@ -12,23 +19,12 @@ export default function Content({ initialState, onClick }) {
   }
 
   this.render = () => {
-    if (!this.state) {
-      $content.innerHTML = ''
-      return
-    }
-
     $content.innerHTML = contentTemplate(this.state)
 
-    $content.addEventListener('click', ({ target }) => {
-      const $subDocument = target.closest('li')
-      if ($subDocument) {
-        const subId = $subDocument.dataset.id
-        onClick(subId)
-      }
+    addEventHandler($content, 'click', ({ target }) => {
+      handleSubsClick(target, onClick)
     })
   }
 
   this.render()
-
-  return $content
 }

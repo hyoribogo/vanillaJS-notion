@@ -1,14 +1,25 @@
-import { createComponent } from '../../utils/domUtils.js'
+import {
+  addEventHandler,
+  createComponent,
+  removeEventHandler,
+  handleKeyup,
+} from '../../utils/domUtils.js'
 import Content from './Content.js'
 import Title from './Title.js'
 
 export default function Editor({ $target, initialState, onEdit, onClick }) {
-  const $editor = createComponent('div', 'editor')
-  $target.appendChild($editor)
+  const $editor = createComponent('div', {
+    className: 'editor',
+  })
 
   this.state = initialState
 
   this.setState = (nextState) => {
+    if (!nextState) {
+      $target.contains($editor) && $target.removeChild($editor)
+      return
+    }
+
     this.state = nextState
     this.render()
   }
@@ -16,31 +27,23 @@ export default function Editor({ $target, initialState, onEdit, onClick }) {
   let keyupListener = null
 
   this.render = () => {
+    $target.appendChild($editor)
     $editor.innerHTML = ''
 
-    const $title = new Title({ initialState: this.state })
-    const $content = new Content({ initialState: this.state, onClick })
-
-    $editor.appendChild($title)
-    $editor.appendChild($content)
+    new Title({ $target: $editor, initialState: this.state })
+    new Content({
+      $target: $editor,
+      initialState: this.state,
+      onClick,
+    })
 
     if (keyupListener) {
-      // 이전에 등록한 keyup 이벤트 리스너가 있을 경우 제거
-      $editor.removeEventListener('keyup', keyupListener)
+      removeEventHandler($editor, 'keyup', keyupListener)
     }
 
     keyupListener = ({ target }) => {
-      const name = target.closest('div').className
-
-      const nextState = {
-        ...this.state,
-        [name]: target.value,
-      }
-      onEdit(nextState)
-
-      this.state = nextState // 낙관적 업데이트
+      handleKeyup(target, onEdit, this.state)
     }
-
-    $editor.addEventListener('keyup', keyupListener)
+    addEventHandler($editor, 'keyup', keyupListener)
   }
 }

@@ -1,14 +1,14 @@
 import MainPage from '../pages/MainPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import { DATA } from '../utils/constants'
-import { eventHandler } from '../utils/domUtils'
+import { addEventHandler } from '../utils/domUtils'
 import { fetchMainData } from '../utils/fetchData'
 
 export default function App({ $target }) {
   let main, notFound
 
   this.init = () => {
-    eventHandler(window, 'popstate', this.route)
+    addEventHandler(window, 'popstate', this.route)
     this.route()
   }
 

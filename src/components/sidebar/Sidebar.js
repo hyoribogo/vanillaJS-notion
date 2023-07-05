@@ -10,8 +10,10 @@ export default function Sidebar({
   onToggle,
   onDelete,
 }) {
-  const $sidebar = createComponent('div', 'sidebar')
-  $target.appendChild($sidebar)
+  const $sidebar = createComponent('div', {
+    className: 'sidebar',
+    parentElement: $target,
+  })
 
   this.state = initialState
 
@@ -23,17 +25,15 @@ export default function Sidebar({
   this.render = () => {
     $sidebar.innerHTML = ''
 
-    const $header = new SidebarHeader()
-    const $documents = new DocumentsList({
+    new SidebarHeader({ $target: $sidebar })
+    new DocumentsList({
+      $target: $sidebar,
       initialState: this.state,
       onClick,
       onAdd,
       onToggle,
       onDelete,
     })
-
-    $sidebar.appendChild($header)
-    $sidebar.appendChild($documents)
   }
 
   this.render()

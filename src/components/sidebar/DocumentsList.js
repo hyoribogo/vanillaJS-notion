@@ -1,14 +1,23 @@
 import { documentsListTemplate } from '../../templates/mainPageTemplates'
-import { createComponent } from '../../utils/domUtils'
+import {
+  addEventHandler,
+  createComponent,
+  removeEventHandler,
+  handleSidebarClick,
+} from '../../utils/domUtils'
 
 export default function DocumentsList({
+  $target,
   initialState,
   onClick,
   onAdd,
   onToggle,
   onDelete,
 }) {
-  const $documents = createComponent('div', 'documents')
+  const $documents = createComponent('div', {
+    className: 'documents',
+    parentElement: $target,
+  })
 
   this.state = initialState
 
@@ -17,37 +26,26 @@ export default function DocumentsList({
     this.render()
   }
 
+  let clickListener = null
+
   this.render = () => {
     $documents.innerHTML = documentsListTemplate(this.state)
-    const $documentsList = $documents.querySelectorAll('li')
 
-    $documentsList.forEach(($document) => {
-      $document.addEventListener('click', async (e) => {
-        const { id } = $document.dataset
-        const { target } = e
-        e.stopPropagation()
+    if (clickListener) {
+      removeEventHandler($documents, 'click', clickListener)
+    }
 
-        this.setState([...this.state])
-
-        if (target.closest('.toggle')) {
-          onToggle(target, id)
-        } else if (target.closest('.add')) {
-          if (id) {
-            onAdd(id)
-            onToggle($document.querySelector('.toggle'), id, target.className)
-          } else {
-            onAdd()
-          }
-        } else if (target.closest('.delete')) {
-          onDelete(id)
-        } else if (target.closest('.document')) {
-          id && onClick(id)
-        }
+    clickListener = ({ target }) => {
+      handleSidebarClick(target, {
+        onClick,
+        onToggle,
+        onAdd,
+        onDelete,
       })
-    })
+    }
+
+    addEventHandler($documents, 'click', clickListener)
   }
 
   this.render()
-
-  return $documents
 }
