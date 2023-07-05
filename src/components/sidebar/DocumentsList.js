@@ -1,6 +1,5 @@
-import { ENV } from '../../utils/constants'
+import { documentsListTemplate } from '../../templates/SidebarTemplates'
 import { createComponent } from '../../utils/domUtils'
-import { getItem } from '../../utils/storage'
 
 export default function DocumentsList({
   initialState,
@@ -18,45 +17,8 @@ export default function DocumentsList({
     this.render()
   }
 
-  const renderDocument = (document) => {
-    const { id, title, documents } = document
-    const toggleState = getItem(ENV.TOGGLE_STATE_SAVE_KEY)
-    const isHiddenClass = toggleState?.[id] ? '' : 'hidden'
-
-    let html = `
-      <li data-id="${id}" class="document">
-        <button class="toggle">Toggle</button>
-        <span>[${id}] ${title.length ? title : '제목 없음'}</span>
-        <button class="delete">X</button>
-        <button class="add">+</button>
-    `
-
-    if (documents.length && toggleState) {
-      html += `<ul class="nested ${isHiddenClass}">`
-      documents.forEach((subDocument) => {
-        html += `${renderDocument(subDocument)}`
-      })
-      html += '</ul>'
-    } else {
-      html += `
-        <ul class="nested ${isHiddenClass} null">
-          <li>하위 페이지 없음</li>
-        </ul>`
-    }
-
-    html += '</li>'
-
-    return html
-  }
-
   this.render = () => {
-    $documents.innerHTML = `
-      <ul>
-        ${this.state.map((document) => `${renderDocument(document)}`).join('')}
-        <li><button class="add">+ 페이지 추가</button></li>
-      </ul>
-    `
-
+    $documents.innerHTML = documentsListTemplate(this.state)
     const $documentsList = $documents.querySelectorAll('li')
 
     $documentsList.forEach(($document) => {

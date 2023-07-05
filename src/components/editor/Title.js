@@ -1,3 +1,4 @@
+import { titleTemplate } from '../../templates/editorTemplates'
 import { createComponent } from '../../utils/domUtils'
 
 export default function Title({ initialState }) {
@@ -16,17 +17,7 @@ export default function Title({ initialState }) {
       return
     }
 
-    const { title } = this.state
-
-    if (title.length) {
-      $title.innerHTML = `
-        <input value="${title}" />
-      `
-    } else {
-      $title.innerHTML = `
-        <input class="untitled" placeholder="제목 없음" />
-      `
-    }
+    $title.innerHTML = titleTemplate(this.state)
   }
 
   this.render()

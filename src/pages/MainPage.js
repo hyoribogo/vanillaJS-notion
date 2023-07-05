@@ -8,9 +8,10 @@ import {
 import { getItem, setItem } from '../utils/storage'
 import { DATA, ENV } from '../utils/constants'
 import { navigate } from '../routes/URLRouter'
+import { createComponent } from '../utils/domUtils'
 
 export default function MainPage({ $target, updateState }) {
-  const $main = document.createElement('div')
+  const $main = createComponent('div', 'main')
   $target.appendChild($main)
 
   this.documents = []
