@@ -40,15 +40,16 @@ export function handleSidebarClick(target, events) {
   const { id } = $li.dataset
 
   if (target.closest('.toggle')) {
-    onToggle(target, id)
+    handleToggle($li, id, onToggle)
     return
   }
 
   if (target.closest('.add')) {
     id && onAdd(id)
-    id && onToggle($li.querySelector('.toggle'), id, target.className)
-
     !id && onAdd()
+    $li.querySelector('.nested')?.classList.contains('hidden') &&
+      handleToggle($li, id, onToggle)
+
     return
   }
 
@@ -59,5 +60,15 @@ export function handleSidebarClick(target, events) {
 
   if ($li) {
     id && onClick(id)
+  }
+}
+
+function handleToggle($li, id, onToggle) {
+  const nestedList = $li.querySelector('.nested')
+
+  if (nestedList) {
+    nestedList.classList.toggle('hidden')
+    const isOpen = !nestedList.classList.contains('hidden')
+    onToggle(id, isOpen)
   }
 }

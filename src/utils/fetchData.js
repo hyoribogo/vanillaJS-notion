@@ -42,7 +42,6 @@ export async function fetchMainData(page, targetState, id) {
     case DATA.DOCUMENT:
       // documents 데이터 받기
       page.setDocuments(await fetchDocuments())
-      page.setContent(null)
       break
     case DATA.CONTENT:
       // content 데이터 받기

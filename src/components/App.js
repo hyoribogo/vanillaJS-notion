@@ -20,7 +20,7 @@ export default function App({ $target }) {
     const { pathname } = location
     const isMain = pathname === '/'
     const isEditor = pathname.indexOf('/documents/') === 0
-    const id = isEditor && pathname.split('/')[2]
+    const id = isEditor ? pathname.split('/')[2] : null
     $target.innerHTML = ''
 
     if (isMain || isEditor) {
