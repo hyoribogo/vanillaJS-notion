@@ -1,9 +1,9 @@
-export default function Content({ initialState, onClick, onToggle }) {
+export default function Content({ initialState, onClick }) {
   const $content = document.createElement('div')
   $content.classList.add('content')
 
   this.state = initialState
-  this.input = this.state?.content
+  this.input = this.state.content
 
   this.setState = (nextState) => {
     this.state = nextState
@@ -39,8 +39,6 @@ export default function Content({ initialState, onClick, onToggle }) {
         const subId = $subDocument.dataset.id
         onClick(subId)
       }
-
-      // 현재 id 토글하기
     })
   }
 

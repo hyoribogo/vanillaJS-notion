@@ -1,11 +1,11 @@
 import Content from './Content.js'
 import Title from './Title.js'
 
-export default function Editor({ $target, onEdit, onClick }) {
+export default function Editor({ $target, initialState, onEdit, onClick }) {
   const $editor = document.createElement('div')
   $target.appendChild($editor)
 
-  this.state = {}
+  this.state = initialState
 
   this.setState = (nextState) => {
     this.state = nextState

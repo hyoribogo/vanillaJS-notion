@@ -20,7 +20,7 @@ export default function MainPage({ $target, updateState }) {
     sidebar.setState(nextDocuments)
   }
 
-  this.content = []
+  this.content = {}
 
   this.setContent = (nextDocuments) => {
     this.content = nextDocuments
@@ -77,6 +77,7 @@ export default function MainPage({ $target, updateState }) {
 
   const editor = new Editor({
     $target: $main,
+    initialState: this.content,
     onEdit: async (post) => {
       if (timer) {
         clearTimeout(timer)
