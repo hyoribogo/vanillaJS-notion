@@ -5,6 +5,7 @@ import {
   getRootDocument,
   getSpecificDocument,
 } from '../api/api'
+import { DATA } from './constants'
 
 export async function fetchDocuments() {
   return await getRootDocument()
@@ -34,4 +35,22 @@ export async function editDocument(id, title, content) {
 
 export async function deleteDocument(id) {
   return await deleteSpecificDocument(id)
+}
+
+export async function fetchMainData(page, targetState, id) {
+  switch (targetState) {
+    case DATA.DOCUMENT:
+      // documents 데이터 받기
+      page.setDocuments(await fetchDocuments())
+      break
+    case DATA.CONTENT:
+      // content 데이터 받기
+      page.setContent(await fetchContent(id))
+      break
+    case DATA.ALL:
+      // 전부 받기
+      page.setDocuments(await fetchDocuments())
+      page.setContent(await fetchContent(id))
+      break
+  }
 }

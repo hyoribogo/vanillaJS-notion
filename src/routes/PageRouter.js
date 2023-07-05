@@ -19,6 +19,6 @@ export default function PageRouter({ $target }) {
     }
 
     $target.innerHTML = ''
-    return PageComponent
+    return [PageComponent, PageComponent.name]
   }
 }
