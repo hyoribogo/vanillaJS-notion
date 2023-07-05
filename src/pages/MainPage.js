@@ -1,16 +1,15 @@
 import Sidebar from '../components/sidebar/Sidebar'
 import Editor from '../components/editor/Editor'
 import {
-  fetchRootDocument,
-  fetchSpecificDocument,
   createNewDocument,
   deleteDocument,
+  editDocument,
 } from '../utils/fetchData'
 import { getItem, setItem } from '../utils/storage'
-import { editSpecificDocument } from '../api/api'
-import { ENV } from '../utils/constants'
+import { DATA, ENV } from '../utils/constants'
+import { navigate } from '../routes/URLRouter'
 
-export default function MainPage({ $target }) {
+export default function MainPage({ $target, updateState }) {
   const $main = document.createElement('div')
   $target.appendChild($main)
 
@@ -33,30 +32,34 @@ export default function MainPage({ $target }) {
     initialState: this.documents,
     onClick: (id) => {
       navigate(`/documents/${id}`)
+      updateState(DATA.CONTENT, id)
     },
     onAdd: async (id) => {
       const newDocument = await createNewDocument(id)
       navigate(`/documents/${newDocument.id}`)
-      return newDocument.id
+      updateState(DATA.ALL, newDocument.id)
     },
     onToggle: async (target, id, event = '') => {
       const $toggle = target.closest('.toggle')
       const $nestedList = $toggle.closest('li').querySelector('.nested')
-      if (event !== 'add' || $nestedList.classList.contains('hidden'))
+
+      if (event !== 'add' || $nestedList.classList.contains('hidden')) {
         $nestedList.classList.toggle('hidden')
+      }
 
       const isOpen = !$nestedList.classList.contains('hidden')
       saveToggleState(id, isOpen)
-      fetchDocumentsData()
+      this.setDocuments(this.documents)
     },
     onDelete: async (id) => {
       const pathId = location.pathname.split('/').at(-1)
-
       await deleteDocument(id)
+
       if (pathId === id) {
         navigate('/')
+        updateState(DATA.DOCUMENT)
       } else {
-        fetchDocumentsData()
+        updateState(DATA.DOCUMENT)
       }
     },
   })
@@ -88,51 +91,15 @@ export default function MainPage({ $target }) {
           [id]: post,
         }
         setItem(ENV.TEMP_POST_SAVE_KEY, nextState)
-        const res = await editSpecificDocument(id, {
-          title,
-          content,
-        })
-
-        fetchDocumentsData()
+        await editDocument(id, title, content)
+        // 내용만 변경 시에는 content만 변하게 구현하기
+        // 토글 열리는 버그 수정하기
+        updateState(DATA.ALL, id)
       }, 1000)
     },
     onClick: (id) => {
       navigate(`/documents/${id}`)
+      updateState(DATA.CONTENT, id)
     },
   })
-
-  const fetchDocumentsData = async () => {
-    const documents = await fetchRootDocument()
-    this.setDocuments(documents)
-  }
-
-  const fetchContentData = async () => {
-    const id = location.pathname.split('/').at(-1)
-    const content = id ? await fetchSpecificDocument(id) : null
-
-    this.setContent(content)
-  }
-
-  const navigate = (path) => {
-    const { pathname } = location
-
-    if (pathname === path) {
-      window.history.replaceState(null, null, path)
-    } else {
-      window.history.pushState(null, null, path)
-    }
-
-    this.fetchData()
-  }
-
-  this.fetchData = () => {
-    fetchDocumentsData()
-    fetchContentData()
-  }
-
-  this.init = () => {
-    this.fetchData()
-  }
-
-  this.init()
 }

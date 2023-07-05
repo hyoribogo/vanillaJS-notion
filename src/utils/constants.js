@@ -4,3 +4,9 @@ export const ENV = {
   TEMP_POST_SAVE_KEY: import.meta.env.TEMP_POST_SAVE_KEY,
   TOGGLE_STATE_SAVE_KEY: import.meta.env.TOGGLE_STATE_SAVE_KEY,
 }
+
+export const DATA = {
+  DOCUMENT: 'documents',
+  CONTENT: 'content',
+  ALL: 'all',
+}

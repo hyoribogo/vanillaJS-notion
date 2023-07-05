@@ -1,38 +1,37 @@
 import {
   createDocument,
   deleteSpecificDocument,
+  editSpecificDocument,
   getRootDocument,
   getSpecificDocument,
 } from '../api/api'
 
-async function fetchRootDocument() {
-  const documents = await getRootDocument()
-  return documents
+export async function fetchDocuments() {
+  return await getRootDocument()
 }
 
-async function fetchSpecificDocument(id) {
-  const content = await getSpecificDocument(id)
-  return content
+export async function fetchContent(id) {
+  return await getSpecificDocument(id)
 }
 
-async function createNewDocument(parentId) {
+export async function createNewDocument(parentId) {
   const data = {
     title: '',
     parent: parentId || null,
   }
 
-  const newDocument = await createDocument(data)
-  return newDocument
+  return await createDocument(data)
 }
 
-async function deleteDocument(id) {
-  await deleteSpecificDocument(id)
+export async function editDocument(id, title, content) {
+  const data = {
+    title,
+    content,
+  }
+
+  return await editSpecificDocument(id, data)
 }
 
-export {
-  fetchRootDocument,
-  fetchSpecificDocument,
-  createNewDocument,
-  createDocument,
-  deleteDocument,
+export async function deleteDocument(id) {
+  return await deleteSpecificDocument(id)
 }

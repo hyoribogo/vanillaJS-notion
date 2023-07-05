@@ -3,11 +3,11 @@ import NotFoundPage from '../pages/NotFoundPage'
 
 export default function PageRouter({ $target }) {
   this.init = () => {
-    this.route()
-
     window.addEventListener('popstate', () => {
       this.route()
     })
+
+    return this.route()
   }
 
   this.route = () => {
@@ -19,6 +19,6 @@ export default function PageRouter({ $target }) {
     }
 
     $target.innerHTML = ''
-    new PageComponent({ $target })
+    return PageComponent
   }
 }
