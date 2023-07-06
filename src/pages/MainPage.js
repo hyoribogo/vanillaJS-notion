@@ -41,6 +41,7 @@ export default function MainPage({ $target, updateState }) {
     },
     onToggle: (id, isOpen) => {
       dispatchToggleEvent(id, isOpen)
+      sidebar.render()
     },
     onDelete: async (id) => {
       const isNavigated = dispatchDeleteEvent(id, updateState)
