@@ -65,19 +65,12 @@ function renderDocument({ id, title, documents }, depth) {
   // 하위 documents 렌더링
   if (isToggled === 'open') {
     if (documents.length) {
-      html += `<li class='sub'><ul>`
       documents.forEach((subDocument) => {
         html += `${renderDocument(subDocument, depth + 1)}`
       })
-
-      html += `</ul></li>`
     } else {
       html += `
-        <li class='sub'>
-          <ul class='no-subs'>
-            <li class='document depth${depth + 1}'>하위 페이지 없음</li>
-          </ul>
-        </li>
+        <li class='no-subs document depth${depth + 1}'>하위 페이지 없음</li>
       `
     }
   }
@@ -92,7 +85,7 @@ function documentTemplate(id, title, isToggled, depth) {
         isToggled ? 'open' : 'close'
       }.svg'></button>
       <img class='doc' src='/assets/images/doc.svg'>
-      <span>${title.length ? title : '제목 없음'}</span>
+      <p>${title.length ? title : '제목 없음'}</p>
       <button class='delete'><img src='/assets/images/delete.svg'></button>
       <button class='add'><img src='/assets/images/add.svg'></button>
     </li>
