@@ -30,15 +30,6 @@ export function titleTemplate({ title }) {
 }
 
 // sidebar
-export function documentsListTemplate(documents) {
-  return `
-    <ul>
-      ${documents.map((document) => `${renderDocument(document)}`).join('')}
-      <li><button class='add'>+ 페이지 추가</button></li>
-    </ul>
-  `
-}
-
 export function sidebarHeaderTemplate() {
   return `
     <img src="" />
@@ -46,32 +37,55 @@ export function sidebarHeaderTemplate() {
   `
 }
 
+export function documentsListTemplate(documents) {
+  return `
+    <ul>
+      ${documents.map((document) => `${renderDocument(document)}`).join('')}
+      <li>
+        <button class='add'>
+          <img src='/assets/images/add.svg'>페이지 추가
+        </button>
+      </li>
+    </ul>
+  `
+}
+
 function renderDocument({ id, title, documents }) {
   const toggleState = getItem(ENV.TOGGLE_STATE_SAVE_KEY)
-  const isHiddenClass = toggleState?.[id] ? '' : 'hidden'
+  const isToggled = toggleState?.[id] ? 'open' : ''
 
-  let html = `
-    <li data-id='${id}' class='document'>
-      <button class='toggle'>Toggle</button>
-      <span>[${id}] ${title.length ? title : '제목 없음'}</span>
-      <button class='delete'>X</button>
-      <button class='add'>+</button>
-  `
+  let html = documentTemplate(id, title, isToggled)
 
-  if (documents.length) {
-    html += `<ul class='nested ${isHiddenClass}'>`
-    documents.forEach((subDocument) => {
-      html += `${renderDocument(subDocument)}`
-    })
-    html += '</ul>'
-  } else {
-    html += `
-      <ul class='nested ${isHiddenClass} no-subs'>
-        <li>하위 페이지 없음</li>
-      </ul>`
+  // 하위 documents 렌더링
+  if (isToggled === 'open') {
+    if (documents.length) {
+      html += `<li class='sub'><ul>`
+      documents.forEach((subDocument) => {
+        html += `${renderDocument(subDocument)}`
+      })
+
+      html += `</ul></li>`
+    } else {
+      html += `
+        <li class='sub'>
+          <ul class='no-subs'>
+            <li>하위 페이지 없음</li>
+          </ul>
+        </li>
+      `
+    }
   }
 
-  html += '</li>'
-
   return html
+}
+
+function documentTemplate(id, title, isToggled) {
+  return `
+    <li data-id='${id}' class='document ${isToggled}'>
+      <button class='toggle'><img src='/assets/images/toggle_close.svg'></button>
+      <span>[${id}] ${title.length ? title : '제목 없음'}</span>
+      <button class='delete'><img src='/assets/images/delete.svg'></button>
+      <button class='add'><img src='/assets/images/add.svg'></button>
+    </li>
+  `
 }
