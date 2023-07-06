@@ -36,16 +36,23 @@
 }
 
 .header:hover,
-.documents li:hover:not(.sub) {
+.documents li:hover:not(.no-subs) {
   background: rgba(0, 0, 0, 0.04);
 }
 
-.documents .document {
+.documents .document:not(.no-subs) {
   cursor: pointer;
 }
 
 .documents .doc {
   margin-right: 5px;
+}
+
+.documents p {
+  width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .documents .document .delete {
