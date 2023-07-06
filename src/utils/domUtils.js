@@ -66,3 +66,13 @@ function handleToggle($li, id, onToggle) {
   const isOpen = !$li.classList.contains('open')
   onToggle(id, isOpen)
 }
+
+export function handleTreesPadding(element) {
+  const documents = element.querySelectorAll('.document')
+
+  for (const document of documents) {
+    const depth = document.className.split('depth').at(-1)
+
+    document.style.paddingLeft = depth !== '0' ? 10 * depth + 5 + 'px' : '5px'
+  }
+}
