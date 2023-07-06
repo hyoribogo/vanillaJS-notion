@@ -3,19 +3,24 @@ import { getItem } from '../utils/storage'
 
 // editor
 export function contentTemplate({ content, documents }) {
-  return `
-    <textarea>${content ? content : ''}</textarea>
-    <ul class="sub-documents-list">
-      ${documents
-        .map(
-          (subDocument) =>
-            `<li class="sub-document" data-id="${subDocument.id}"><span>${
-              subDocument.title.length ? subDocument.title : '제목 없음'
-            }</span></li>`,
-        )
-        .join('')}
-    </ul>
-  `
+  let html = `<textarea>${content ? content : ''}</textarea>`
+
+  if (documents.length) {
+    html += `
+      <ul class="sub-documents-list">
+        ${documents
+          .map(
+            (subDocument) =>
+              `<li class="sub-document" data-id="${subDocument.id}"><span>${
+                subDocument.title.length ? subDocument.title : '제목 없음'
+              }</span></li>`,
+          )
+          .join('')}
+      </ul>
+    `
+  }
+
+  return html
 }
 
 export function titleTemplate({ title }) {
@@ -53,7 +58,7 @@ function renderDocument({ id, title, documents }) {
       <button class='add'>+</button>
   `
 
-  if (documents.length && toggleState) {
+  if (documents.length) {
     html += `<ul class='nested ${isHiddenClass}'>`
     documents.forEach((subDocument) => {
       html += `${renderDocument(subDocument)}`
