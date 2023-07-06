@@ -40,7 +40,7 @@ export function titleTemplate({ title }) {
 export function sidebarHeaderTemplate() {
   return `
     <img src="" />
-    <span>효리보고의 Notion</span>
+    <span>😸 효리보고의 Notion</span>
   `
 }
 
