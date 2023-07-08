@@ -9,14 +9,14 @@ export default function App({ $target }) {
 
   this.init = () => {
     addEventHandler(window, 'popstate', this.route)
-    this.route()
+    route()
   }
 
   const updateState = (targetState, id) => {
     fetchMainData(main, targetState, id)
   }
 
-  this.route = () => {
+  const route = () => {
     const { pathname } = location
     const isMain = pathname === '/'
     const isEditor = pathname.indexOf('/documents/') === 0
@@ -28,7 +28,7 @@ export default function App({ $target }) {
       isMain && updateState(DATA.DOCUMENT)
       isEditor && updateState(DATA.ALL, id)
     } else {
-      notFound = new NotFoundPage({ $target, updateState })
+      notFound = new NotFoundPage({ $target, route })
     }
   }
 

@@ -1,12 +1,20 @@
+import { createComponent } from '../domain/domUtils'
+import { navigate } from '../routes/URLRouter'
 import { notFoundTemplate } from '../templates/notFoundPageTemplates'
+import { DATA } from '../utils/constants'
 
-export default function NotFoundPage({ $target }) {
-  const $notFoundPage = document.createElement('div')
-  $target.appendChild($notFoundPage)
+export default function NotFoundPage({ $target, route }) {
+  const $notFoundPage = createComponent('div', {
+    className: 'not-found',
+    parentElement: $target,
+  })
 
   $notFoundPage.innerHTML = notFoundTemplate()
 
-  $notFoundPage.addEventListener('click', () => {
-    // navigate('/')
+  $notFoundPage.addEventListener('click', ({ target }) => {
+    if (target.closest('button')) {
+      navigate('/')
+      route()
+    }
   })
 }

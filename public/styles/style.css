@@ -190,3 +190,35 @@
   text-decoration: underline;
   text-decoration-color: rgba(55, 53, 47, 0.2);
 }
+
+/* 404 */
+.not-found {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.not-found img {
+  margin-bottom: 16px;
+}
+
+.not-found p {
+  font-size: 20px;
+  margin-bottom: 18px;
+}
+
+.not-found button {
+  color: white;
+  height: 32px;
+  background: rgb(35, 131, 226);
+  border-radius: 4px;
+  padding: 0 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.not-found button:hover {
+  background: rgb(0, 117, 211);
+}
