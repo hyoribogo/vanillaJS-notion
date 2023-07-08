@@ -76,3 +76,10 @@ export function handleTreesPadding(element) {
     document.style.paddingLeft = depth !== '0' ? 10 * depth + 5 + 'px' : '5px'
   }
 }
+
+export function handleDocumentTitle(id, title) {
+  const $titleContainer = document.querySelector(`[data-id='${id}']`)
+  const $title = $titleContainer.querySelector('p')
+
+  $title.innerHTML = title.length ? title : '제목 없음'
+}

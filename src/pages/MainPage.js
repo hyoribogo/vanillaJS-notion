@@ -1,6 +1,6 @@
 import Sidebar from '../components/sidebar/Sidebar'
 import Editor from '../components/editor/Editor'
-import { createComponent } from '../utils/domUtils'
+import { createComponent, handleDocumentTitle } from '../utils/domUtils'
 import {
   dispatchAddEvent,
   dispatchClickEvent,
@@ -62,6 +62,11 @@ export default function MainPage({ $target, updateState }) {
         },
         1000,
       )
+
+      if (editor.state.title !== post.title) {
+        handleDocumentTitle(post.id, post.title)
+        editor.state.title = post.title
+      }
     },
     onClick: (id) => {
       dispatchClickEvent(id, updateState)

@@ -31,9 +31,7 @@ export function contentTemplate({ content, documents }) {
 }
 
 export function titleTemplate({ title }) {
-  return title.length
-    ? `<input value="${title}" />`
-    : `<input class="untitled" placeholder="제목 없음" />`
+  return `<input value="${title}" placeholder="제목 없음" />`
 }
 
 // sidebar
