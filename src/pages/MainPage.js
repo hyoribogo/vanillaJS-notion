@@ -44,7 +44,7 @@ export default function MainPage({ $target, updateState }) {
       sidebar.render()
     },
     onDelete: async (id) => {
-      const isNavigated = dispatchDeleteEvent(id, updateState)
+      const isNavigated = await dispatchDeleteEvent(id, updateState)
       isNavigated && editor.setState(null)
     },
   })
