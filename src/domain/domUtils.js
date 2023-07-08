@@ -28,6 +28,10 @@ export function handleSubsClick(target, onClick) {
 }
 
 export function handleKeyup(target, onEdit, state) {
+  if (state.id == ID.ROOT_DOCUMENT) {
+    return
+  }
+
   const name = target.closest('div').className
   const nextState = {
     ...state,
