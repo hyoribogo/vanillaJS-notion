@@ -1,8 +1,8 @@
 import MainPage from '../pages/MainPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import { DATA } from '../utils/constants'
-import { addEventHandler } from '../utils/domUtils'
-import { fetchMainData } from '../utils/fetchData'
+import { addEventHandler } from '../domain/domUtils'
+import { fetchMainData } from '../domain/fetchData'
 
 export default function App({ $target }) {
   let main, notFound

@@ -1,5 +1,5 @@
 import { sidebarHeaderTemplate } from '../../templates/mainPageTemplates'
-import { createComponent } from '../../utils/domUtils'
+import { createComponent } from '../../domain/domUtils'
 
 export default function SidebarHeader({ $target }) {
   const $header = createComponent('div', {

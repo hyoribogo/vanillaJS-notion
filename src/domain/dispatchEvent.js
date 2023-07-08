@@ -1,7 +1,7 @@
 import { navigate } from '../routes/URLRouter'
-import { DATA, ENV } from './constants'
+import { DATA, ENV } from '../utils/constants'
 import { createNewDocument, deleteDocument, editDocument } from './fetchData'
-import { getItem, setItem } from './storage'
+import { getItem, setItem } from '../utils/storage'
 
 export function dispatchClickEvent(id, update) {
   navigate(`/documents/${id}`)

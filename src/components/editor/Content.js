@@ -3,7 +3,7 @@ import {
   createComponent,
   addEventHandler,
   handleSubsClick,
-} from '../../utils/domUtils'
+} from '../../domain/domUtils'
 
 export default function Content({ $target, initialState, onClick }) {
   const $content = createComponent('div', {

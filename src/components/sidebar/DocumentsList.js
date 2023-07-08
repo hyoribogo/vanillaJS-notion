@@ -5,7 +5,7 @@ import {
   removeEventHandler,
   handleSidebarClick,
   handleTreesPadding,
-} from '../../utils/domUtils'
+} from '../../domain/domUtils'
 
 export default function DocumentsList({
   $target,

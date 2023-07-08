@@ -1,5 +1,5 @@
 import { titleTemplate } from '../../templates/mainPageTemplates'
-import { createComponent } from '../../utils/domUtils'
+import { createComponent } from '../../domain/domUtils'
 
 export default function Title({ $target, initialState }) {
   const $title = createComponent('div', {

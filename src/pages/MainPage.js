@@ -1,13 +1,13 @@
 import Sidebar from '../components/sidebar/Sidebar'
 import Editor from '../components/editor/Editor'
-import { createComponent, handleDocumentTitle } from '../utils/domUtils'
+import { createComponent, handleDocumentTitle } from '../domain/domUtils'
 import {
   dispatchAddEvent,
   dispatchClickEvent,
   dispatchDeleteEvent,
   dispatchEditEvent,
   dispatchToggleEvent,
-} from '../utils/dispatchEvent'
+} from '../domain/dispatchEvent'
 import { debounce } from '../utils/debounce'
 
 export default function MainPage({ $target, updateState }) {
@@ -55,18 +55,19 @@ export default function MainPage({ $target, updateState }) {
     $target: $main,
     initialState: this.content,
     onEdit: (post, name) => {
-      timer = debounce(
-        timer,
-        () => {
-          dispatchEditEvent(post, name, updateState)
-        },
-        1000,
-      )
-
       if (editor.state.title !== post.title) {
         handleDocumentTitle(post.id, post.title)
         editor.state.title = post.title
       }
+
+      timer = debounce(
+        timer,
+        () => {
+          dispatchEditEvent(post, name, updateState)
+          console.log('저장 완료')
+        },
+        1000,
+      )
     },
     onClick: (id) => {
       dispatchClickEvent(id, updateState)

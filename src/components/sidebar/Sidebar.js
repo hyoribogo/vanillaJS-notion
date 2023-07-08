@@ -1,4 +1,4 @@
-import { createComponent } from '../../utils/domUtils'
+import { createComponent } from '../../domain/domUtils'
 import DocumentsList from './DocumentsList'
 import SidebarHeader from './SidebarHeader'
 

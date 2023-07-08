@@ -5,7 +5,7 @@ import {
   getRootDocument,
   getSpecificDocument,
 } from '../api/api'
-import { DATA } from './constants'
+import { DATA } from '../utils/constants'
 
 export async function fetchDocuments() {
   return await getRootDocument()

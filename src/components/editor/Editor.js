@@ -3,7 +3,7 @@ import {
   createComponent,
   removeEventHandler,
   handleKeyup,
-} from '../../utils/domUtils.js'
+} from '../../domain/domUtils.js'
 import Content from './Content.js'
 import Title from './Title.js'
 
