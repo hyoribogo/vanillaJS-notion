@@ -39,17 +39,6 @@ export async function dispatchDeleteEvent(id, update) {
   return false
 }
 
-export async function dispatchEditEvent(post, name, update) {
-  const currState = getItem(ENV.TEMP_POST_SAVE_KEY)
-  const { id, title, content } = post
-
-  const nextState = {
-    ...currState,
-    [id]: post,
-  }
-  setItem(ENV.TEMP_POST_SAVE_KEY, nextState)
+export async function dispatchEditEvent({ id, title, content }) {
   await editDocument(id, title, content)
-
-  name === 'content' && update(DATA.CONTENT, id)
-  name === 'title' && update(DATA.ALL, id)
 }
