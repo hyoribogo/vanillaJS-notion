@@ -68,7 +68,7 @@ function renderDocument({ id, title, documents }, depth) {
       })
     } else {
       html += `
-        <li class='no-subs document depth${depth + 1}'>하위 페이지 없음</li>
+        <li class='no-subs document depth${depth + 1}'>　하위 페이지 없음</li>
       `
     }
   }

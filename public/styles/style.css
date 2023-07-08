@@ -14,6 +14,7 @@
 .sidebar {
   height: 100%;
   background: rgb(251, 251, 250);
+  border-right: rgba(0, 0, 0, 0.03) solid 1px;
 }
 
 .sidebar .header {
@@ -25,6 +26,7 @@
 
 .documents {
   color: rgba(25, 23, 17, 0.6);
+  padding: 0 3px;
 }
 
 .documents li {
@@ -33,11 +35,12 @@
   display: flex;
   align-items: center;
   position: relative;
+  border-radius: 4px;
 }
 
 .header:hover,
 .documents li:hover:not(.no-subs) {
-  background: rgba(0, 0, 0, 0.04);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .documents .document:not(.no-subs) {
@@ -49,7 +52,7 @@
 }
 
 .documents p {
-  width: 140px;
+  width: 135px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -65,12 +68,56 @@
   right: 10px;
 }
 
+.documents .document {
+  padding-left: 5px;
+}
+
+.documents .depth1 {
+  padding-left: 15px;
+}
+
+.documents .depth1 p {
+  width: 125px;
+}
+
+.documents .depth2 {
+  padding-left: 25px;
+}
+
+.documents .depth2 p {
+  width: 115px;
+}
+
+.documents .depth3 {
+  padding-left: 35px;
+}
+
+.documents .depth3 p {
+  width: 105px;
+}
+
+.documents .depth4 {
+  padding-left: 45px;
+}
+
+.documents .depth4 p {
+  width: 95px;
+}
+
+.documents .depth5 {
+  padding-left: 55px;
+}
+
 .documents li.add {
   padding-left: 5px;
 }
 
 .documents li.add img {
   margin-right: 3px;
+}
+
+.documents .no-subs {
+  color: rgba(55, 53, 47, 0.5);
 }
 
 .delete:hover,
@@ -103,6 +150,7 @@
 .title input {
   font-size: 40px;
   font-weight: 700;
+  overflow-x: auto;
 }
 
 .title input::placeholder {

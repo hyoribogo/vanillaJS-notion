@@ -4,7 +4,6 @@ import {
   createComponent,
   removeEventHandler,
   handleSidebarClick,
-  handleTreesPadding,
 } from '../../domain/domUtils'
 
 export default function DocumentsList({
@@ -31,7 +30,6 @@ export default function DocumentsList({
 
   this.render = () => {
     $documents.innerHTML = documentsListTemplate(this.state)
-    handleTreesPadding($documents)
 
     if (clickListener) {
       removeEventHandler($documents, 'click', clickListener)

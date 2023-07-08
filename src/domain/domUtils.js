@@ -51,8 +51,12 @@ export function handleSidebarClick(target, events) {
   }
 
   if (target.closest('.add')) {
-    id && onAdd(id)
-    !id && onAdd()
+    if (id) {
+      countDocumentDepth(target) && onAdd(id)
+    } else {
+      onAdd()
+    }
+
     !$li.classList.contains('open') && handleToggle($li, id, onToggle)
 
     return
@@ -81,19 +85,16 @@ function handleToggle($li, id, onToggle) {
   onToggle(id, isOpen)
 }
 
-export function handleTreesPadding(element) {
-  const documents = element.querySelectorAll('.document')
-
-  for (const document of documents) {
-    const depth = document.className.split('depth').at(-1)
-
-    document.style.paddingLeft = depth !== '0' ? 10 * depth + 5 + 'px' : '5px'
-  }
-}
-
 export function handleDocumentTitle(id, title) {
   const $titleContainer = document.querySelector(`[data-id='${id}']`)
   const $title = $titleContainer.querySelector('p')
 
   $title.innerHTML = title.length ? title : '제목 없음'
+}
+
+export function countDocumentDepth(element) {
+  const $li = element.closest('li')
+  const depth = $li.className.match(/depth(\d+)/)[1]
+
+  return depth < 4 ? true : false
 }
