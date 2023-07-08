@@ -27,8 +27,6 @@ export async function dispatchDeleteEvent(id, update) {
   const [, , pathId] = location.pathname.split('/')
   await deleteDocument(id)
 
-  console.log(pathId, id)
-
   if (pathId === id) {
     navigate('/')
     update(DATA.DOCUMENT)

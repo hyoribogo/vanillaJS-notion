@@ -24,11 +24,6 @@ export default function Content({ $target, initialState, onClick }) {
     addEventHandler($content, 'click', ({ target }) => {
       handleSubsClick(target, onClick)
     })
-
-    const $textarea = $content.querySelector('textarea')
-
-    $textarea.focus()
-    $textarea.setSelectionRange($textarea.value.length, $textarea.value.length)
   }
 
   this.render()

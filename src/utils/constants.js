@@ -9,3 +9,9 @@ export const DATA = {
   CONTENT: 'content',
   ALL: 'all',
 }
+
+export const ID = {
+  ROOT_DOCUMENT: import.meta.env.VITE_ROOT_DOCUMENT,
+  GUEST_DOCUMENT: import.meta.env.VITE_GUEST_DOCUMENT,
+  ISSUE_DOCUMENT: import.meta.env.VITE_ISSUE_DOCUMENT,
+}

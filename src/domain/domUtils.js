@@ -1,3 +1,5 @@
+import { ID } from '../utils/constants'
+
 export function createComponent(tagName, options = {}) {
   const { className, parentElement } = options
   const element = document.createElement(tagName)
@@ -53,6 +55,14 @@ export function handleSidebarClick(target, events) {
   }
 
   if (target.closest('.delete')) {
+    if (
+      id === ID.ROOT_DOCUMENT ||
+      id === ID.GUEST_DOCUMENT ||
+      id === ID.ISSUE_DOCUMENT
+    ) {
+      return
+    }
+
     onDelete(id)
     return
   }
