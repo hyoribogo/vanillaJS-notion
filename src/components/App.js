@@ -1,6 +1,6 @@
 import MainPage from '../pages/MainPage'
 import NotFoundPage from '../pages/NotFoundPage'
-import { DATA } from '../utils/constants'
+import { DATA, ID } from '../utils/constants'
 import { addEventHandler } from '../domain/domUtils'
 import { fetchMainData } from '../domain/fetchData'
 
@@ -25,7 +25,7 @@ export default function App({ $target }) {
 
     if (isMain || isEditor) {
       main = new MainPage({ $target, updateState })
-      isMain && updateState(DATA.DOCUMENT)
+      isMain && updateState(DATA.ALL, ID.ROOT_DOCUMENT)
       isEditor && updateState(DATA.ALL, id)
     } else {
       notFound = new NotFoundPage({ $target, route })
