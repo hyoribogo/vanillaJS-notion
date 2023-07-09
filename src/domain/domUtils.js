@@ -1,4 +1,4 @@
-import { ID } from '../utils/constants'
+import { DOCUMENT_DEPTH, ID } from '../utils/constants'
 
 export function createComponent(tagName, options = {}) {
   const { className, parentElement } = options
@@ -42,47 +42,44 @@ export function handleKeyup(target, onEdit, state) {
 
 export function handleSidebarClick(target, events) {
   const { onClick, onToggle, onAdd, onDelete } = events
-  const $li = target.closest('li')
-  const { id } = $li.dataset
+  const $document = target.closest('li')
+  const $toggleButton = target.closest('.toggle')
+  const $addButton = target.closest('.add')
+  const $deleteButton = target.closest('.delete')
+  const isToggleClosed = !$document.classList.contains('open')
+  const { id } = $document.dataset
 
-  if (target.closest('.toggle')) {
-    handleToggle($li, id, onToggle)
+  if ($toggleButton) {
+    onToggle(id, isToggleClosed)
     return
   }
 
-  if (target.closest('.add')) {
+  if ($addButton) {
     if (id) {
-      countDocumentDepth(target) && onAdd(id)
+      countDocumentDepth($document) && onAdd(id)
     } else {
       onAdd()
     }
 
-    !$li.classList.contains('open') && handleToggle($li, id, onToggle)
-
+    isToggleClosed && onToggle(id, isToggleClosed)
     return
   }
 
-  if (target.closest('.delete')) {
-    if (
+  if ($deleteButton) {
+    const isProtectedId =
       id === ID.ROOT_DOCUMENT ||
       id === ID.GUEST_DOCUMENT ||
       id === ID.ISSUE_DOCUMENT
-    ) {
-      return
-    }
 
-    onDelete(id)
+    if (!isProtectedId) {
+      onDelete(id)
+    }
     return
   }
 
-  if ($li) {
+  if ($document) {
     id && onClick(id)
   }
-}
-
-function handleToggle($li, id, onToggle) {
-  const isOpen = !$li.classList.contains('open')
-  onToggle(id, isOpen)
 }
 
 export function handleDocumentTitle(id, title) {
@@ -92,9 +89,7 @@ export function handleDocumentTitle(id, title) {
   $title.innerHTML = title.length ? title : '제목 없음'
 }
 
-export function countDocumentDepth(element) {
-  const $li = element.closest('li')
-  const depth = $li.className.match(/depth(\d+)/)[1]
-
-  return depth < 4
+function countDocumentDepth($document) {
+  const depth = $document.className.match(/depth(\d+)/)[1]
+  return depth < DOCUMENT_DEPTH.MAX_DEPTH
 }

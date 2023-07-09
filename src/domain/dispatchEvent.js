@@ -14,11 +14,11 @@ export async function dispatchAddEvent(id, update) {
   update(DATA.ALL, newDocument.id)
 }
 
-export function dispatchToggleEvent(id, isOpen) {
+export function dispatchToggleEvent(id, targetToggleState) {
   const currState = getItem(ENV.TOGGLE_STATE_SAVE_KEY)
   const nextState = {
     ...currState,
-    [id]: isOpen,
+    [id]: targetToggleState,
   }
   setItem(ENV.TOGGLE_STATE_SAVE_KEY, nextState)
 }

@@ -15,3 +15,7 @@ export const ID = {
   GUEST_DOCUMENT: import.meta.env.VITE_GUEST_DOCUMENT,
   ISSUE_DOCUMENT: import.meta.env.VITE_ISSUE_DOCUMENT,
 }
+
+export const DOCUMENT_DEPTH = {
+  MAX_DEPTH: 4,
+}
