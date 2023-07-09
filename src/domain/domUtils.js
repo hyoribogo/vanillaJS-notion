@@ -96,5 +96,5 @@ export function countDocumentDepth(element) {
   const $li = element.closest('li')
   const depth = $li.className.match(/depth(\d+)/)[1]
 
-  return depth < 4 ? true : false
+  return depth < 4
 }
