@@ -70,8 +70,9 @@ export function handleSidebarClick(target, events) {
     ) {
       return
     }
+    console.log(id, ID.ROOT_DOCUMENT, ID.GUEST_DOCUMENT, ID.ISSUE_DOCUMENT)
 
-    onDelete(id)
+    // onDelete(id)
     return
   }
 
