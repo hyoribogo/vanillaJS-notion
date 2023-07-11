@@ -16,6 +16,6 @@ export const ID = {
   ISSUE_DOCUMENT: import.meta.env.VITE_ISSUE_DOCUMENT,
 }
 
-export const DOCUMENT_DEPTH = {
-  MAX_DEPTH: 4,
-}
+export const MAX_DEPTH = 4
+
+export const NOT_FOUND = 'Not Found'

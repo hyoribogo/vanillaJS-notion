@@ -1,4 +1,4 @@
-import { DOCUMENT_DEPTH, ID } from '../utils/constants'
+import { MAX_DEPTH, ID } from '../utils/constants'
 
 export function createComponent(tagName, options = {}) {
   const { className, parentElement } = options
@@ -91,5 +91,5 @@ export function handleDocumentTitle(id, title) {
 
 function countDocumentDepth($document) {
   const depth = $document.className.match(/depth(\d+)/)[1]
-  return depth < DOCUMENT_DEPTH.MAX_DEPTH
+  return depth < MAX_DEPTH
 }

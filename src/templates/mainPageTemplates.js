@@ -7,7 +7,7 @@ export function contentTemplate({ content, documents }) {
     content ? content : ''
   }</textarea>`
 
-  if (documents.length) {
+  if (documents?.length) {
     html += `
       <ul class='sub-documents-list'>
         ${documents

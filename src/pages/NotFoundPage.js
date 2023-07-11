@@ -1,7 +1,6 @@
 import { createComponent } from '../domain/domUtils'
 import { navigate } from '../routes/URLRouter'
 import { notFoundTemplate } from '../templates/notFoundPageTemplates'
-import { DATA } from '../utils/constants'
 
 export default function NotFoundPage({ $target, route }) {
   const $notFoundPage = createComponent('div', {

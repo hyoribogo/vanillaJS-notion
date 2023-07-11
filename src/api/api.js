@@ -1,24 +1,18 @@
-import NotFoundPage from '../pages/NotFoundPage'
-import { ENV } from '../utils/constants'
+import { ENV, NOT_FOUND } from '../utils/constants'
 
 const request = async (url = '', options = {}) => {
-  try {
-    const res = await fetch(`${ENV.API_END_POINT}${url}`, {
-      ...options,
-    })
+  const res = await fetch(`${ENV.API_END_POINT}${url}`, {
+    ...options,
+  })
 
-    if (res.ok) {
-      return await res.json()
-    }
-
-    if (res.status === 404) {
-      throw new Error('Not Found')
-    }
-
-    throw new Error('API 처리 중 에러가 발생했습니다.')
-  } catch (e) {
-    console.log(e.message)
+  if (res.ok) {
+    return await res.json()
   }
+
+  if (res.status === 404) {
+    throw new Error(NOT_FOUND)
+  }
+  throw new Error(`API 처리 중 ${res.status} 에러가 발생했습니다.`)
 }
 
 const fetchData = async (url, method = 'GET', data = null) => {
@@ -39,16 +33,24 @@ const fetchData = async (url, method = 'GET', data = null) => {
 
 // 전체 Document 목록 불러오기 GET
 export const getRootDocument = async () => {
-  const res = await fetchData('')
-  return res
+  try {
+    const res = await fetchData('')
+    return res
+  } catch (e) {
+    throw e
+  }
 }
 
 // 특정 Document 불러오기 GET
 export const getSpecificDocument = async (id) => {
   if (!id) return null
 
-  const res = await fetchData(id)
-  return res
+  try {
+    const res = await fetchData(id)
+    return res
+  } catch (e) {
+    throw e
+  }
 }
 
 // Document 생성하기 POST
