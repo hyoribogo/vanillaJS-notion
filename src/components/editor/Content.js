@@ -13,11 +13,6 @@ export default function Content({ $target, initialState, onClick }) {
 
   this.state = initialState
 
-  this.setState = (nextState) => {
-    this.state = nextState
-    this.render()
-  }
-
   this.render = () => {
     $content.innerHTML = contentTemplate(this.state)
 
