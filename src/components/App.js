@@ -14,7 +14,9 @@ export default function App({ $target }) {
 
   const updateState = async (targetState, id) => {
     try {
-      await fetchMainData(main, targetState, id)
+      const { documents, content } = await fetchMainData(targetState, id)
+      documents && main.setDocuments(documents)
+      content && main.setContent(content)
     } catch (e) {
       throw e
     }

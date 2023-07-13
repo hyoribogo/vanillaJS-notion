@@ -1,9 +1,9 @@
 {
-  "extends": ["eslint:recommended", "plugin:jest/recommended"],
+  "extends": ["eslint:recommended", "plugin:jest/recommended", "prettier"],
   "plugins": ["jest"],
   "parserOptions": {
     "sourceType": "module",
-    "ecmaVersion": 2021
+    "ecmaVersion": "latest"
   },
   "env": {
     "browser": true,

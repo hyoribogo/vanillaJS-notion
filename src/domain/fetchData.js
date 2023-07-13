@@ -37,21 +37,19 @@ export async function deleteDocument(id) {
   return await deleteSpecificDocument(id)
 }
 
-export async function fetchMainData(page, targetState, id) {
-  try {
-    switch (targetState) {
-      case DATA.DOCUMENT:
-        page.setDocuments(await fetchDocuments())
-      case DATA.CONTENT:
-        page.setContent(await fetchContent(id))
-        break
-      case DATA.ALL:
-        page.setDocuments(await fetchDocuments())
-        page.setContent(await fetchContent(id))
-        break
-      default:
-    }
-  } catch (e) {
-    throw e
+export async function fetchMainData(targetState, id) {
+  switch (targetState) {
+    case DATA.DOCUMENT:
+      return { documents: await fetchDocuments() }
+    case DATA.CONTENT:
+      return { content: await fetchContent(id) }
+    case DATA.ALL:
+      const [documents, content] = await Promise.all([
+        fetchDocuments(),
+        fetchContent(id),
+      ])
+      return { documents, content }
+    default:
+      return null
   }
 }
