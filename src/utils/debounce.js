@@ -1,7 +1,7 @@
-export function debounce(timer, callback, time) {
-  if (timer) {
+export default function debounce(func, delay) {
+  let timer
+  return (...args) => {
     clearTimeout(timer)
+    timer = setTimeout(() => func(...args), delay)
   }
-
-  return setTimeout(callback, time)
 }

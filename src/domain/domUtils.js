@@ -27,7 +27,7 @@ export function handleSubsClick(target, onClick) {
   }
 }
 
-export function handleKeyup(target, onEdit, state) {
+export function handleKeyup(target, onEdit, onTitleUpdate, state) {
   if (state.id == ID.ROOT_DOCUMENT) {
     return
   }
@@ -37,6 +37,7 @@ export function handleKeyup(target, onEdit, state) {
     ...state,
     [name]: target.value,
   }
+  onTitleUpdate(nextState)
   onEdit(nextState, name)
 }
 

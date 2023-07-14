@@ -8,7 +8,13 @@ import { validateNewInstance } from '../../utils/validation.js'
 import Content from './Content.js'
 import Title from './Title.js'
 
-export default function Editor({ $target, initialState, onEdit, onClick }) {
+export default function Editor({
+  $target,
+  initialState,
+  onEdit,
+  onTitleUpdate,
+  onClick,
+}) {
   validateNewInstance('Editor', new.target)
 
   const $editor = createComponent('div', {
@@ -45,7 +51,7 @@ export default function Editor({ $target, initialState, onEdit, onClick }) {
     }
 
     keyupListener = ({ target }) => {
-      handleKeyup(target, onEdit, this.state)
+      handleKeyup(target, onEdit, onTitleUpdate, this.state)
     }
     addEventHandler($editor, 'keyup', keyupListener)
   }
