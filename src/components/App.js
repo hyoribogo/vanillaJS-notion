@@ -28,7 +28,7 @@ export default function App({ $target }) {
   this.route = async () => {
     const { pathname } = location
     const isMain = pathname === '/'
-    const isEditor = pathname.indexOf('/documents/') === 0
+    const isEditor = pathname.startsWith('/documents/')
     const id = isEditor ? pathname.split('/')[2] : null
     $target.innerHTML = ''
 
