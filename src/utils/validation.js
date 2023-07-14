@@ -1,9 +1,9 @@
+import { ErrorMessages } from './constants'
+
 export function validateNewInstance(name, target) {
   try {
     if (!target) {
-      throw new Error(
-        `${name} 컴포넌트 생성 시 new 연산자를 붙이지 않았습니다.`,
-      )
+      throw new Error(`${name} ${ErrorMessages.INVALID_NEW_OPERATION}`)
     }
   } catch (e) {
     console.log(e.message)

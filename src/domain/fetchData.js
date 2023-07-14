@@ -5,7 +5,7 @@ import {
   getRootDocument,
   getSpecificDocument,
 } from '../api/api'
-import { DATA } from '../utils/constants'
+import { DATA, ErrorMessages } from '../utils/constants'
 
 export async function fetchDocuments() {
   return await getRootDocument()
@@ -50,6 +50,6 @@ export async function fetchMainData(targetState, id) {
       ])
       return { documents, content }
     default:
-      return null
+      throw new Error(ErrorMessages.INVALID_UPDATE_REQUEST)
   }
 }

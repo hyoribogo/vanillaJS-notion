@@ -1,3 +1,4 @@
+import { ErrorMessages } from './constants'
 import { validateNewInstance } from './validation'
 
 describe('validateNewInstance', () => {
@@ -18,6 +19,6 @@ describe('validateNewInstance', () => {
 
     expect(() => {
       TestComponent()
-    }).toThrow('TestComponent 컴포넌트 생성 시 new 연산자를 붙이지 않았습니다.')
+    }).toThrow(`TestComponent ${ErrorMessages.INVALID_NEW_OPERATION}`)
   })
 })
