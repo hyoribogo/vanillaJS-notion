@@ -1,39 +1,51 @@
-import { debounce } from './debounce'
+import debounce from './debounce'
 
 describe('debounce', () => {
-  beforeEach(() => {
-    jest.useFakeTimers()
-    jest.spyOn(global, 'setTimeout')
-    jest.spyOn(global, 'clearTimeout')
-  })
-
-  afterEach(() => {
-    jest.clearAllTimers()
-  })
+  jest.useFakeTimers()
 
   test('시간이 지난 뒤에 콜백함수가 호출됩니다.', () => {
     const callback = jest.fn()
+    const debouncedFunction = debounce(callback, 1000)
 
-    debounce(null, callback, 2000)
+    debouncedFunction()
+
     expect(callback).not.toBeCalled()
 
-    jest.advanceTimersByTime(2000)
+    jest.runAllTimers()
 
     expect(callback).toBeCalled()
     expect(callback).toHaveBeenCalledTimes(1)
   })
 
-  test('새로운 타이머가 생기기 전에 기존 타이머가 초기화됩니다.', () => {
+  test('마지막 호출로부터 일정 시간이 지나지 않으면 실행되지 않아야 합니다.', () => {
     const callback = jest.fn()
-    const delay = 1000
+    const debouncedFunction = debounce(callback, 1000)
 
-    const previousTimer = setTimeout(callback, 500)
-    debounce(previousTimer, callback, delay)
+    debouncedFunction()
+    jest.advanceTimersByTime(500)
+    debouncedFunction()
+    jest.advanceTimersByTime(500)
 
-    expect(clearTimeout).toBeCalledWith(previousTimer)
+    // 여전히 이전 호출의 타이머가 동작 중이므로 콜백은 호출되지 않음
+    expect(callback).not.toBeCalled()
 
-    jest.advanceTimersByTime(delay)
+    jest.runAllTimers()
 
+    // 마지막 호출로부터 1000ms가 경과하였으므로 콜백이 호출됨
+    expect(callback).toBeCalled()
+    expect(callback).toHaveBeenCalledTimes(1)
+  })
+
+  test('마지막 호출 이후에만 실행되도록 합니다.', () => {
+    const callback = jest.fn()
+    const debouncedFunction = debounce(callback, 1000)
+
+    debouncedFunction()
+    jest.advanceTimersByTime(500)
+    debouncedFunction()
+    jest.advanceTimersByTime(1000)
+
+    // 마지막 호출로부터 1000ms가 경과하였으므로 콜백이 호출됨
     expect(callback).toBeCalled()
     expect(callback).toHaveBeenCalledTimes(1)
   })
