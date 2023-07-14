@@ -4,7 +4,7 @@ import { getItem } from '../utils/storage'
 // editor
 export function contentTemplate({ content, documents }) {
   let html = `<textarea placeholder='새로 글을 작성해 보세요.'>${
-    content ? content : ''
+    content || ''
   }</textarea>`
 
   if (documents?.length) {
@@ -56,12 +56,12 @@ export function documentsListTemplate(documents) {
 
 function renderDocument({ id, title, documents }, depth) {
   const toggleState = getItem(ENV.TOGGLE_STATE_SAVE_KEY)
-  const isToggled = toggleState?.[id] ? 'open' : ''
+  const isToggled = toggleState?.[id]
 
   let html = documentTemplate(id, title, isToggled, depth)
 
   // 하위 documents 렌더링
-  if (isToggled === 'open') {
+  if (isToggled) {
     if (documents.length) {
       documents.forEach((subDocument) => {
         html += `${renderDocument(subDocument, depth + 1)}`
@@ -78,7 +78,9 @@ function renderDocument({ id, title, documents }, depth) {
 
 function documentTemplate(id, title, isToggled, depth) {
   return `
-    <li data-id='${id}' class='document ${isToggled} depth${depth}'>
+    <li data-id='${id}' class='document ${
+    isToggled ? 'open' : ''
+  } depth${depth}'>
       <button class='toggle'><img src='/assets/images/toggle_${
         isToggled ? 'open' : 'close'
       }.svg'></button>
