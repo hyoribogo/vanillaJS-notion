@@ -1,7 +1,7 @@
 import { ENV, NOT_FOUND } from '../utils/constants'
 
-const request = async (url = '', options = {}) => {
-  const res = await fetch(`${ENV.API_END_POINT}${url}`, {
+const request = async (pathname = '', options = {}) => {
+  const res = await fetch(`${ENV.API_END_POINT}${pathname}`, {
     ...options,
   })
 
@@ -15,8 +15,8 @@ const request = async (url = '', options = {}) => {
   throw new Error(`API 처리 중 ${res.status} 에러가 발생했습니다.`)
 }
 
-const fetchData = async (url, method = 'GET', data = null) => {
-  if (url) url = `/${url}`
+const fetchData = async (pathname, method = 'GET', data = null) => {
+  if (pathname) pathname = `/${pathname}`
 
   const options = {
     method,
@@ -27,7 +27,7 @@ const fetchData = async (url, method = 'GET', data = null) => {
     body: data ? JSON.stringify(data) : null,
   }
 
-  const res = await request(url, options)
+  const res = await request(pathname, options)
   return res
 }
 
