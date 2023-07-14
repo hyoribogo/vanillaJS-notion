@@ -4,8 +4,11 @@ import {
   addEventHandler,
   handleSubsClick,
 } from '../../domain/domUtils'
+import { validateNewInstance } from '../../utils/validation'
 
 export default function Content({ $target, initialState, onClick }) {
+  validateNewInstance('Content', new.target)
+
   const $content = createComponent('div', {
     className: 'content',
     parentElement: $target,

@@ -1,4 +1,5 @@
 import { createComponent } from '../../domain/domUtils'
+import { validateNewInstance } from '../../utils/validation'
 import DocumentsList from './DocumentsList'
 import SidebarHeader from './SidebarHeader'
 
@@ -10,6 +11,8 @@ export default function Sidebar({
   onToggle,
   onDelete,
 }) {
+  validateNewInstance('Sidebar', new.target)
+
   const $sidebar = createComponent('div', {
     className: 'sidebar',
     parentElement: $target,

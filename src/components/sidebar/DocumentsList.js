@@ -5,6 +5,7 @@ import {
   removeEventHandler,
   handleSidebarClick,
 } from '../../domain/domUtils'
+import { validateNewInstance } from '../../utils/validation'
 
 export default function DocumentsList({
   $target,
@@ -14,6 +15,8 @@ export default function DocumentsList({
   onToggle,
   onDelete,
 }) {
+  validateNewInstance('DocumentsList', new.target)
+
   const $documents = createComponent('div', {
     className: 'documents',
     parentElement: $target,

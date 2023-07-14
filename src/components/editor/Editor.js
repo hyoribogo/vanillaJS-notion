@@ -4,10 +4,13 @@ import {
   removeEventHandler,
   handleKeyup,
 } from '../../domain/domUtils.js'
+import { validateNewInstance } from '../../utils/validation.js'
 import Content from './Content.js'
 import Title from './Title.js'
 
 export default function Editor({ $target, initialState, onEdit, onClick }) {
+  validateNewInstance('Editor', new.target)
+
   const $editor = createComponent('div', {
     className: 'editor',
   })

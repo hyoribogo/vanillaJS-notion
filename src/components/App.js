@@ -3,8 +3,11 @@ import NotFoundPage from '../pages/NotFoundPage'
 import { DATA, ID, NOT_FOUND } from '../utils/constants'
 import { addEventHandler } from '../domain/domUtils'
 import { fetchMainData } from '../domain/fetchData'
+import { validateNewInstance } from '../utils/validation'
 
 export default function App({ $target }) {
+  validateNewInstance('App', new.target)
+
   let main, notFound
 
   this.init = () => {

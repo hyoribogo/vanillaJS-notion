@@ -1,7 +1,10 @@
 import { titleTemplate } from '../../templates/mainPageTemplates'
 import { createComponent } from '../../domain/domUtils'
+import { validateNewInstance } from '../../utils/validation'
 
 export default function Title({ $target, initialState }) {
+  validateNewInstance('Title', new.target)
+
   const $title = createComponent('div', {
     className: 'title',
     parentElement: $target,

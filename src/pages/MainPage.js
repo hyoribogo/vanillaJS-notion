@@ -9,8 +9,11 @@ import {
   dispatchToggleEvent,
 } from '../domain/dispatchEvent'
 import { debounce } from '../utils/debounce'
+import { validateNewInstance } from '../utils/validation'
 
 export default function MainPage({ $target, updateState }) {
+  validateNewInstance('MainPage', new.target)
+
   const $main = createComponent('div', {
     className: 'main',
     parentElement: $target,
