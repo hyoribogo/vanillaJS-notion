@@ -118,6 +118,7 @@
 
 .documents .no-subs {
   color: rgba(55, 53, 47, 0.5);
+  white-space: pre-wrap;
 }
 
 .delete:hover,
