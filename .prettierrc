@@ -7,5 +7,6 @@
   "arrowParens": "always",
   "bracketSpacing": true,
   "bracketSameLine": false,
-  "formatOnSave": true
+  "formatOnSave": true,
+  "plugins": ["prettier-plugin-organize-imports"]
 }

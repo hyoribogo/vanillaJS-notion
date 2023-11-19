@@ -9,5 +9,9 @@
     "browser": true,
     "es2021": true,
     "jest/globals": true
+  },
+  "rules": {
+    "newline-before-return": "error",
+    "no-case-declarations": "off"
   }
 }
