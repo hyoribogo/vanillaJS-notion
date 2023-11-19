@@ -41,14 +41,17 @@ export async function fetchMainData(targetState, id) {
   switch (targetState) {
     case DATA.DOCUMENT:
       return { documents: await fetchDocuments() }
+
     case DATA.CONTENT:
       return { content: await fetchContent(id) }
+
     case DATA.ALL:
       const [documents, content] = await Promise.all([
         fetchDocuments(),
         fetchContent(id),
       ])
       return { documents, content }
+
     default:
       throw new Error(ErrorMessages.INVALID_UPDATE_REQUEST)
   }

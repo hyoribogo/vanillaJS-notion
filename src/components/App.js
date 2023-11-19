@@ -16,13 +16,9 @@ export default function App({ $target }) {
   }
 
   const updateState = async (targetState, id) => {
-    try {
-      const { documents, content } = await fetchMainData(targetState, id)
-      documents && main.setDocuments(documents)
-      content && main.setContent(content)
-    } catch (e) {
-      throw e
-    }
+    const { documents, content } = await fetchMainData(targetState, id)
+    documents && main.setDocuments(documents)
+    content && main.setContent(content)
   }
 
   this.route = async () => {
@@ -42,6 +38,7 @@ export default function App({ $target }) {
       }
     } catch (e) {
       $target.innerHTML = ''
+
       if (e.message === NOT_FOUND) {
         notFound = new NotFoundPage({ $target, route: this.route })
       }
