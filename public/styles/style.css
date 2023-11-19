@@ -194,11 +194,11 @@
 
 /* 404 */
 .not-found {
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-top: 30vh;
 }
 
 .not-found img {
