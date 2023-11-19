@@ -1,9 +1,9 @@
-import { contentTemplate } from '../../templates/mainPageTemplates'
 import {
-  createComponent,
   addEventHandler,
+  createComponent,
   handleSubsClick,
 } from '../../domain/domUtils'
+import { contentTemplate } from '../../templates/mainPageTemplates'
 import { validateNewInstance } from '../../utils/validation'
 
 export default function Content({ $target, initialState, onClick }) {

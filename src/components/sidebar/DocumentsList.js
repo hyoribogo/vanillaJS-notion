@@ -1,10 +1,10 @@
-import { documentsListTemplate } from '../../templates/mainPageTemplates'
 import {
   addEventHandler,
   createComponent,
-  removeEventHandler,
   handleSidebarClick,
+  removeEventHandler,
 } from '../../domain/domUtils'
+import { documentsListTemplate } from '../../templates/mainPageTemplates'
 import { validateNewInstance } from '../../utils/validation'
 
 export default function DocumentsList({

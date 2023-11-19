@@ -9,11 +9,11 @@ describe('debounce', () => {
 
     debouncedFunction()
 
-    expect(callback).not.toBeCalled()
+    expect(callback).not.toHaveBeenCalled()
 
     jest.runAllTimers()
 
-    expect(callback).toBeCalled()
+    expect(callback).toHaveBeenCalled()
     expect(callback).toHaveBeenCalledTimes(1)
   })
 
@@ -27,12 +27,12 @@ describe('debounce', () => {
     jest.advanceTimersByTime(500)
 
     // 여전히 이전 호출의 타이머가 동작 중이므로 콜백은 호출되지 않음
-    expect(callback).not.toBeCalled()
+    expect(callback).not.toHaveBeenCalled()
 
     jest.runAllTimers()
 
     // 마지막 호출로부터 1000ms가 경과하였으므로 콜백이 호출됨
-    expect(callback).toBeCalled()
+    expect(callback).toHaveBeenCalled()
     expect(callback).toHaveBeenCalledTimes(1)
   })
 
@@ -46,7 +46,7 @@ describe('debounce', () => {
     jest.advanceTimersByTime(1000)
 
     // 마지막 호출로부터 1000ms가 경과하였으므로 콜백이 호출됨
-    expect(callback).toBeCalled()
+    expect(callback).toHaveBeenCalled()
     expect(callback).toHaveBeenCalledTimes(1)
   })
 })

@@ -1,6 +1,5 @@
-import Sidebar from '../components/sidebar/Sidebar'
 import Editor from '../components/editor/Editor'
-import { createComponent, handleDocumentTitle } from '../domain/domUtils'
+import Sidebar from '../components/sidebar/Sidebar'
 import {
   dispatchAddEvent,
   dispatchClickEvent,
@@ -8,6 +7,7 @@ import {
   dispatchEditEvent,
   dispatchToggleEvent,
 } from '../domain/dispatchEvent'
+import { createComponent, handleDocumentTitle } from '../domain/domUtils'
 import debounce from '../utils/debounce'
 import { validateNewInstance } from '../utils/validation'
 

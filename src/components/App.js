@@ -1,15 +1,14 @@
+import { addEventHandler } from '../domain/domUtils'
+import { fetchMainData } from '../domain/fetchData'
 import MainPage from '../pages/MainPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import { DATA, ID, NOT_FOUND } from '../utils/constants'
-import { addEventHandler } from '../domain/domUtils'
-import { fetchMainData } from '../domain/fetchData'
 import { validateNewInstance } from '../utils/validation'
 
 export default function App({ $target }) {
   validateNewInstance('App', new.target)
 
-  let main = {},
-    notFound = {}
+  let main = {}
   let isPop = false
   let isError = false
 
@@ -50,7 +49,7 @@ export default function App({ $target }) {
         isMain && (await updateState(DATA.ALL, ID.ROOT_DOCUMENT))
         isEditor && (await updateState(DATA.ALL, id))
       } else {
-        notFound = new NotFoundPage({ $target, route: this.route })
+        new NotFoundPage({ $target, route: this.route })
       }
 
       isError = false
@@ -58,7 +57,7 @@ export default function App({ $target }) {
       isError = true
 
       if (e.message === NOT_FOUND) {
-        notFound = new NotFoundPage({ $target, route: this.route })
+        new NotFoundPage({ $target, route: this.route })
       }
     }
   }

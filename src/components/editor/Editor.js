@@ -1,8 +1,8 @@
 import {
   addEventHandler,
   createComponent,
-  removeEventHandler,
   handleKeyup,
+  removeEventHandler,
 } from '../../domain/domUtils.js'
 import { validateNewInstance } from '../../utils/validation.js'
 import Content from './Content.js'
@@ -26,6 +26,7 @@ export default function Editor({
   this.setState = (nextState) => {
     if (!nextState) {
       $target.contains($editor) && $target.removeChild($editor)
+
       return
     }
 

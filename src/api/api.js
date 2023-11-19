@@ -45,6 +45,7 @@ export const getSpecificDocument = async (id) => {
   if (!id) return null
 
   const res = await fetchData(id)
+
   return res
 }
 

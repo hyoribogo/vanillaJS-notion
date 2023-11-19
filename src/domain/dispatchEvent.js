@@ -1,7 +1,7 @@
 import { navigate } from '../routes/URLRouter'
 import { DATA, ENV } from '../utils/constants'
-import { createNewDocument, deleteDocument, editDocument } from './fetchData'
 import { getItem, setItem } from '../utils/storage'
+import { createNewDocument, deleteDocument, editDocument } from './fetchData'
 
 export function dispatchClickEvent(id, update) {
   navigate(`/documents/${id}`)
@@ -30,10 +30,12 @@ export async function dispatchDeleteEvent(id, update) {
   if (pathId === id) {
     navigate('/')
     update(DATA.DOCUMENT)
+
     return true
   }
 
   update(DATA.DOCUMENT)
+
   return false
 }
 

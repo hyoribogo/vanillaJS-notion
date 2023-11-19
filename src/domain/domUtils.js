@@ -1,4 +1,4 @@
-import { MAX_DEPTH, ID } from '../utils/constants'
+import { ID, MAX_DEPTH } from '../utils/constants'
 
 export function createComponent(tagName, options = {}) {
   const { className, parentElement } = options
@@ -52,6 +52,7 @@ export function handleSidebarClick(target, events) {
 
   if ($toggleButton) {
     onToggle(id, isToggleClosed)
+
     return
   }
 
@@ -63,6 +64,7 @@ export function handleSidebarClick(target, events) {
     }
 
     isToggleClosed && onToggle(id, isToggleClosed)
+
     return
   }
 
@@ -75,6 +77,7 @@ export function handleSidebarClick(target, events) {
     if (!isProtectedId) {
       onDelete(id)
     }
+
     return
   }
 
@@ -92,5 +95,6 @@ export function handleDocumentTitle(id, title) {
 
 function countDocumentDepth($document) {
   const depth = $document.className.match(/depth(\d+)/)[1]
+
   return depth < MAX_DEPTH
 }

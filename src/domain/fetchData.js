@@ -50,6 +50,7 @@ export async function fetchMainData(targetState, id) {
         fetchDocuments(),
         fetchContent(id),
       ])
+
       return { documents, content }
 
     default:

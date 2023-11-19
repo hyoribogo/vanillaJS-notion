@@ -1,5 +1,5 @@
-import { titleTemplate } from '../../templates/mainPageTemplates'
 import { createComponent } from '../../domain/domUtils'
+import { titleTemplate } from '../../templates/mainPageTemplates'
 import { validateNewInstance } from '../../utils/validation'
 
 export default function Title({ $target, initialState }) {
