@@ -8,15 +8,23 @@ import { validateNewInstance } from '../utils/validation'
 export default function App({ $target }) {
   validateNewInstance('App', new.target)
 
-  let main, notFound
+  let main = {},
+    notFound = {}
+  let isPop = false
+  let isError = false
 
   this.init = () => {
-    addEventHandler(window, 'popstate', this.route)
+    addEventHandler(window, 'popstate', () => {
+      isPop = true
+      this.route()
+    })
+
     this.route()
   }
 
   const updateState = async (targetState, id) => {
     const { documents, content } = await fetchMainData(targetState, id)
+
     documents && main.setDocuments(documents)
     content && main.setContent(content)
   }
@@ -26,18 +34,28 @@ export default function App({ $target }) {
     const isMain = pathname === '/'
     const isEditor = pathname.startsWith('/documents/')
     const id = isEditor ? pathname.split('/')[2] : null
-    $target.innerHTML = ''
 
     try {
       if (isMain || isEditor) {
+        if (isPop && !isError) {
+          isMain && (await updateState(DATA.CONTENT, ID.ROOT_DOCUMENT))
+          isEditor && (await updateState(DATA.CONTENT, id))
+          isPop = false
+
+          return
+        }
+        $target.innerHTML = ''
+
         main = new MainPage({ $target, updateState })
         isMain && (await updateState(DATA.ALL, ID.ROOT_DOCUMENT))
         isEditor && (await updateState(DATA.ALL, id))
       } else {
         notFound = new NotFoundPage({ $target, route: this.route })
       }
+
+      isError = false
     } catch (e) {
-      $target.innerHTML = ''
+      isError = true
 
       if (e.message === NOT_FOUND) {
         notFound = new NotFoundPage({ $target, route: this.route })

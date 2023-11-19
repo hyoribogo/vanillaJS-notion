@@ -6,6 +6,8 @@ import { validateNewInstance } from '../utils/validation'
 export default function NotFoundPage({ $target, route }) {
   validateNewInstance('NotFoundPage', new.target)
 
+  $target.innerHTML = ''
+
   const $notFoundPage = createComponent('div', {
     className: 'not-found',
     parentElement: $target,
